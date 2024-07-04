@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Página Principal</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.theme.min.css" rel="stylesheet">
+  <style>
+   
+
+    body {
+      background: linear-gradient(500deg, #d4ffeb 0%, #ced1fc 50%, #FFFFFF 100%);
+    }
+
+    .blur-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      backdrop-filter: blur(10px);
+      z-index: -1;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-item {
+      position: relative;
+      padding-bottom: 0.5rem;
+    }
+
+    .navbar-item::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background-color: rgba(0, 3, 206, 0.897);
+      transition: width 0.3s ease, left 0.3s ease;
+    }
+
+    .navbar-item:hover::before,
+    .navbar-item:focus::before,
+    .navbar-item.active::before {
+      width: 100%;
+      left: 0;
+    }
+
+    .bg-blur {
+      backdrop-filter: blur(90px);
+      background-color: rgba(253, 253, 253, 0.116);
+    }
+
+    .glide__slide img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+    }
+
+    .glide__arrows {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+    }
+
+    .glide__arrow {
+      background-color: rgba(0, 0, 0, 0);
+      color: white;
+      border: none;
+      padding: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .glide__arrow:hover {
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .custom-button:hover {
+      background-color: #054085;
+    }
+
+    #logout-button {
+      background-color: rgba(255, 255, 255, 0);
+
+      transition: background-color 0.7s ease;
+      border-radius: 50px;
+      border-color: #0075fa;
+
+      color: rgb(92, 92, 92);
+
+    }
+
+    #logout-button:hover {
+      background-color: #f32f2f;
+      color: rgb(255, 255, 255);
+      border-color: #054085;
+      transition: background-color 0.7s ease;
+
+      /* Rojo oscuro Tailwind */
+    }
+    .product-card img {
+      width: 100%;
+      height: 200px; /* Ajusta este valor según tus necesidades */
+      object-fit: cover; /* Esto asegurará que la imagen se ajuste al contenedor manteniendo su proporción */
+    }
+  </style>
+</head>
+
+<body class="bg-white text-gray-900">
+
+  <!-- Barra de navegación -->
+  <nav class="bg-blur shadow-md w-full z-10">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <div class="text-lg font-bold flex items-center">
+        <span class="material-icons mr-2"><img src="/images/ImgsPag/logo.png" style="width: 50px; height: 50px;"></span>
+        <h1 style="font-size: 40px;">InnovaByte</h1>
+      </div>
+      <div class="space-x-4 flex items-center">
+        <a href="/PaginasDeInicio/Usuario.html" class="navbar-item text-gray-600 hover:text-gray-900 flex items-center">
+          <span class="material-icons mr-1">home</span> Inicio
+        </a>
+        <a href="/PaginasNav/MisPedidos.html" class="navbar-item text-gray-600 hover:text-gray-900 flex items-center">
+          <span class="material-icons mr-1">local_shipping</span> Mis Pedidos
+        </a>
+        <a href="/PaginasNav/CarritoDeCompras.html"
+          class="navbar-item text-gray-600 hover:text-gray-900 flex items-center">
+          <span class="material-icons mr-1">shopping_cart</span> Mi carrito
+        </a>
+        <a href="/Login/login.html" id="logout-button"
+          class="bg-green-600 text-white px-4 py-2 rounded-md flex items-center hover:bg-red-600">
+          <span class="material-icons mr-1">logout</span> <!-- Botom Cerrar Sesion-->
+        </a>
+
+      </div>
+    </div>
+  </nav>
+
+
+
+  <!-- Carrusel -->
+  <div class="glide mt-24" style="margin-top: 0;">
+    <div class="glide__track" data-glide-el="track">
+      <ul class="glide__slides">
+        <li class="glide__slide">
+          <img src="/images/ImgsPag/FotoCarrusel3.png" alt="Imagen 1">
+        </li>
+        <li class="glide__slide">
+          <img src="/images/ImgsPag/FotoCarrusel2.png" alt="Imagen 2">
+        </li>
+        <li class="glide__slide">
+          <img src="/images/ImgsPag/FotoCarrusel1.png" alt="Imagen 3">
+        </li>
+      </ul>
+    </div>
+    <div class="glide__arrows" data-glide-el="controls">
+      <button class="glide__arrow glide__arrow--left" data-glide-dir="<"><span
+          class="material-icons">chevron_left</span> </button>
+      <button class="glide__arrow glide__arrow--right" data-glide-dir=">"><span
+          class="material-icons">chevron_right</span> </button>
+    </div>
+  </div>
+
+  <!-- Sección de productos destacados -->
+  <section class="container mx-auto px-4 py-16">
+    <h2 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl" style="font-size: 30px;">Productos recien agregados</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" id="productos-container" style="margin-top: 30px">
+      <!-- Los productos se cargarán aquí -->
+    </div>
+  </section>
+
+  <!-- Paginación -->
+  <nav class="container mx-auto px-4 py-4 flex justify-center">
+    <ul class="inline-flex items-center -space-x-px">
+      <li>
+        <a href="#"
+          class="py-2 px-3 ml-0 leading-tight text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700">Anterior</a>
+      </li>
+      <li>
+        <a href="#"
+          class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">1</a>
+      </li>
+      <li>
+        <a href="#"
+          class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">2</a>
+      </li>
+      <li>
+        <a href="#"
+          class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">3</a>
+      </li>
+
+      <li>
+        <a href="#"
+          class="py-2 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700">Siguiente</a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Footer -->
+  <footer class="bg-gray-100 py-4">
+    <div class="container mx-auto text-center text-gray-600">
+      <p>&copy; 2024 Universidad Tecnológica Metropolitana. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/glide.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      new Glide('.glide', {
+        type: 'carousel',
+        autoplay: 3000,
+        hoverpause: true,
+        perView: 1
+      }).mount();
+
+      // Cargar productos desde el backend
+      fetch('http://127.0.0.1:8000/productos')
+        .then(response => response.json())
+        .then(data => {
+          const productosContainer = document.getElementById('productos-container');
+          productosContainer.innerHTML = '';
+          data.forEach(producto => {
+            const columna = document.createElement('div');
+            columna.className = 'product-card border rounded-lg p-4 text-center transition transform duration-300';
+            columna.innerHTML = `
+              <img src="${producto.imagen}" alt="Imagen del ${producto.nombre}" class="mb-4 mx-auto">
+              <h3 class="text-lg font-semibold">${producto.nombre}</h3>
+              <p class="text-gray-600">$${producto.precio.toFixed(2)}</p>
+              <a href="#" class="custom-button bg-indigo-600 text-white px-4 py-2 rounded-md mt-4 inline-flex items-center justify-center mx-auto w-max hover:bg-blue-600" onclick="agregarAlCarrito('${producto.nombre}', ${producto.precio})">
+                <span class="material-icons mr-2">add_shopping_cart</span> Agregar al carrito
+              </a>
+            `;
+            productosContainer.appendChild(columna);
+          });
+        })
+        .catch(error => {
+          console.error('Error al cargar los productos:', error);
+        });
+    });
+
+    /* Función de cerrar sesión */
+    document.getElementById('logout-button').addEventListener('click', function (event) {
+      event.preventDefault();
+      fetch('http://127.0.0.1:8000/logout', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => {
+          if (response.ok) {
+            window.location.href = '/Login/CierreLogin.html';
+          } else {
+            response.json().then(data => {
+              alert('Error al cerrar sesión: ' + data.detail);
+            });
+          }
+        })
+        .catch(error => {
+          console.error('Error al cerrar sesión:', error);
+          alert('Error al cerrar sesión');
+        });
+    });
+
+    function agregarAlCarrito(nombre, precio) {
+      let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+      const producto = { nombre, precio, cantidad: 1 };
+
+      const productoExistente = carrito.find(p => p.nombre === nombre);
+      if (productoExistente) {
+        productoExistente.cantidad++;
+      } else {
+        carrito.push(producto);
+      }
+
+      localStorage.setItem('carrito', JSON.stringify(carrito));
+      alert('Producto agregado al carrito');
+    }
+  </script>
+  <script>
+    // Verificar el rol del usuario al cargar la página
+    fetch('http://127.0.0.1:8000/user-role', {
+        method: 'GET',
+        credentials: 'include'
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.role !== 'cliente') {
+            // Si el usuario no es cliente, redirigir a la página de login
+            window.location.href = '/Login/login.html';
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        // Manejar errores, por ejemplo, redirigir a la página de login
+        window.location.href = '/Login/login.html';
+    });
+</script>
+
+
+</body>
+
+</html>

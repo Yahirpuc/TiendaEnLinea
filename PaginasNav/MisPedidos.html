@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Página Principal</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.theme.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(500deg, #d4ffeb 0%, #ced1fc 50%, #FFFFFF 100%);
+    }
+
+    .blur-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      backdrop-filter: blur(10px);
+      z-index: -1;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-item {
+      position: relative;
+      padding-bottom: 0.5rem;
+    }
+
+    .navbar-item::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background-color: rgba(0, 3, 206, 0.897);
+      transition: width 0.3s ease, left 0.3s ease;
+    }
+
+    .navbar-item:hover::before,
+    .navbar-item:focus::before,
+    .navbar-item.active::before {
+      width: 100%;
+      left: 0;
+    }
+
+    .bg-blur {
+      backdrop-filter: blur(90px);
+      background-color: rgba(253, 253, 253, 0.116);
+    }
+
+    .glide__slide img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+    }
+
+    .glide__arrows {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+    }
+
+    .glide__arrow {
+      background-color: rgba(0, 0, 0, 0);
+      color: white;
+      border: none;
+      padding: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .glide__arrow:hover {
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .custom-button:hover {
+      background-color: #054085;
+    }
+
+    #logout-button {
+      background-color: rgba(255, 255, 255, 0);
+
+      transition: background-color 0.7s ease;
+      border-radius: 50px;
+      border-color: #0075fa;
+
+      color: rgb(92, 92, 92);
+
+    }
+
+    #logout-button:hover {
+      background-color: #f32f2f;
+      color: rgb(255, 255, 255);
+      border-color: #054085;
+      transition: background-color 0.7s ease;
+
+      /* Rojo oscuro Tailwind */
+    }
+  </style>
+</head>
+
+<body class="bg-white text-gray-900">
+
+  <!-- Barra de navegación -->
+  <nav class="bg-blur shadow-md w-full z-10">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <div class="text-lg font-bold flex items-center">
+        <span class="material-icons mr-2"><img src="/images/ImgsPag/logo.png" style="width: 50px; height: 50px;"></span>
+        <h1 style="font-size: 40px;">InnovaByte</h1>
+      </div>
+      <div class="space-x-4 flex items-center">
+        <a href="/PaginasDeInicio/Usuario.html" class="navbar-item text-gray-600 hover:text-gray-900 flex items-center">
+          <span class="material-icons mr-1">home</span> Inicio
+        </a>
+        <a href="/PaginasNav/MisPedidos.html" class="navbar-item text-gray-600 hover:text-gray-900 flex items-center">
+          <span class="material-icons mr-1">local_shipping</span> Mis Pedidos
+        </a>
+        <a href="/PaginasNav/CarritoDeCompras.html"
+          class="navbar-item text-gray-600 hover:text-gray-900 flex items-center">
+          <span class="material-icons mr-1">shopping_cart</span> Mi carrito
+        </a>
+        <a href="/PaginasDeInicio/Invitado.html" id="logout-button"
+          class="bg-green-600 text-white px-4 py-2 rounded-md flex items-center hover:bg-red-600">
+          <span class="material-icons mr-1">logout</span> <!-- Botom Cerrar Sesion-->
+        </a>
+
+      </div>
+    </div>
+  </nav>
+
+
+
+
+  <!-- Mis Pedidos -->
+  <div class="container mx-auto py-16">
+    <div class="flex justify-center items-center mb-8">
+
+      <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl" style="font-size: 30px">Gestiona tus
+        pedidos...</h1>
+    </div>
+    <div class="bg-white shadow-md rounded-lg p-6">
+      <div class="overflow-x-auto">
+        <table class="min-w-full bg-white">
+          <thead>
+            <tr>
+              <th class="py-3 px-4 border-b">Producto</th>
+              <th class="py-3 px-4 border-b">Precio</th>
+              <th class="py-3 px-4 border-b">Cantidad</th>
+              <th class="py-3 px-4 border-b">Total</th>
+              <th class="py-3 px-4 border-b">Fecha de Compra</th>
+              <th class="py-3 px-4 border-b"></th>
+            </tr>
+          </thead>
+          <tbody id="pedidos-body" class="divide-y divide-gray-200">
+            <!-- Los pedidos se cargarán aquí -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      cargarPedidos();
+    });
+
+    function cargarPedidos() {
+      console.log('Cargando pedidos...');
+      fetch('http://127.0.0.1:8000/mis-pedidos')
+        .then(response => {
+          console.log('Respuesta recibida:', response);
+          return response.json();
+        })
+        .then(data => {
+          console.log('Datos recibidos:', data);
+          const pedidosBody = document.getElementById('pedidos-body');
+          pedidosBody.innerHTML = '';
+
+          data.forEach(pedido => {
+            const precioTotal = parseFloat(pedido.precio_total);
+            const fila = document.createElement('tr');
+            fila.innerHTML = `
+              <td class="py-2 px-4">${pedido.nombre_producto}</td>
+              <td class="py-2 px-4">$${precioTotal.toFixed(2)}</td>
+              <td class="py-2 px-4">${pedido.cantidad}</td>
+              <td class="py-2 px-4">$${precioTotal.toFixed(2)}</td>
+              <td class="py-2 px-4">${pedido.fecha_pedido}</td>
+              <td class="py-2 px-4">
+                <button class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700" onclick="cancelarPedido(${pedido.pedido_id})">
+                  <i class="material-icons">delete</i>
+                </button>
+              </td>
+            `;
+            pedidosBody.appendChild(fila);
+          });
+        })
+        .catch(error => {
+          console.error('Error al cargar los pedidos:', error);
+        });
+    }
+
+    function cancelarPedido(pedido_id) {
+      console.log('Cancelando pedido:', pedido_id);
+      fetch(`http://127.0.0.1:8000/pedido/${pedido_id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => {
+          console.log('Respuesta de cancelación recibida:', response);
+          return response.json();
+        })
+        .then(data => {
+          if (data.mensaje) {
+            alert(data.mensaje);
+            cargarPedidos();
+          } else {
+            console.error('Error:', data);
+            alert('Error al cancelar el pedido');
+          }
+        })
+        .catch(error => {
+          alert('Error al cancelar el pedido');
+          console.error('Error:', error);
+        });
+    }
+    /* Función de cerrar sesión */
+    document.getElementById('logout-button').addEventListener('click', function (event) {
+      event.preventDefault();
+      fetch('http://127.0.0.1:8000/logout', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => {
+          if (response.ok) {
+            window.location.href = '/Login/CierreLogin.html';
+          } else {
+            response.json().then(data => {
+              alert('Error al cerrar sesión: ' + data.detail);
+            });
+          }
+        })
+        .catch(error => {
+          console.error('Error al cerrar sesión:', error);
+          alert('Error al cerrar sesión');
+        });
+    });
+  </script>
+  <script>
+    fetch('http://127.0.0.1:8000/user-page', {
+      method: 'GET',
+      credentials: 'include'
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.message !== "Access granted") {
+          window.location.href = '/Login/login.html';
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        window.location.href = '/Login/login.html';
+      });
+  </script>
+
+</body>
+
+</html>

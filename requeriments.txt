@@ -1,0 +1,34 @@
+idx_Productos_nombres
+sql
+Copiar código
+CREATE INDEX idx_Productos_nombres ON Productos(Nombre);
+Descripción: Este índice se crea en la columna Nombre de la tabla Productos. Mejora la eficiencia de las búsquedas y consultas que se realizan por el nombre del producto.
+idx_Cliente_email
+sql
+Copiar código
+CREATE INDEX idx_Cliente_email ON Clientes(CorreoElectronico);
+Descripción: Este índice se crea en la columna CorreoElectronico de la tabla Clientes. Facilita las consultas rápidas de clientes basadas en su correo electrónico.
+idx_Pedidos_fechaPedido
+sql
+Copiar código
+CREATE INDEX idx_Pedidos_fechaPedido ON Pedidos(FechaCompra);
+Descripción: Este índice se crea en la columna FechaCompra de la tabla Pedidos. Mejora el rendimiento de las consultas que filtran o ordenan los pedidos por fecha de compra.
+idx_SesionesClientes_ClienteID
+sql
+Copiar código
+CREATE INDEX idx_SesionesClientes_ClienteID ON SesionesClientes(ClienteID);
+Descripción: Este índice se crea en la columna ClienteID de la tabla SesionesClientes. Permite búsquedas eficientes de sesiones basadas en el identificador del cliente.
+idx_Ventas_ClienteID_FechaVenta
+sql
+Copiar código
+CREATE INDEX idx_Ventas_ClienteID_FechaVenta ON Ventas(ClienteID, FechaVenta);
+Descripción: Este índice se crea en las columnas ClienteID y FechaVenta de la tabla Ventas. Facilita la búsqueda y ordenación de ventas por cliente y fecha de venta.
+idx_Productos_Precio
+sql
+Copiar código
+CREATE INDEX idx_Productos_Precio ON Productos(Precio);
+Descripción: Este índice se crea en la columna Precio de la tabla Productos. Mejora el rendimiento de las consultas que filtran o ordenan los productos por precio.
+idx_AuditoriaCRUD_Fecha
+sql
+Copiar código
+CREATE INDEX idx_AuditoriaCRUD_Fecha ON AuditoriaCRUD(Fecha);

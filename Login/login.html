@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="/Login/styleLogin.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" integrity="sha512-ZnR2wlLbSbr8/c9AgLg3jQPAattCUImNsae6NHYnS9KrIwRdcY9DxFotXhNAKIKbAXlRnujIqUWoXXwqyFOeIQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form</title>
+    <style>
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        body {
+            animation: fadeIn 1s ease-in-out;
+           
+        }
+
+        /* Close button */
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+
+        .close-button i {
+            font-size: 24px;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    
+
+    <div class="container">
+        
+        
+        <div class="box">
+            
+            <div class="form sign_in">
+                <div class="close-button">
+                    <i class="bi bi-x" onclick="cerrar()"></i>
+                </div>
+                
+                <h3>Iniciar Sesión</h3>
+                <span>Usa una cuenta existente</span>
+                <form id="login_form">
+                    <div class="type">
+                        <input type="text" placeholder="Nombre de usuario" name="nombre_usuario" id="login_nombre_usuario" required>
+                    </div>
+                    <div class="type">
+                        <input type="password" placeholder="Contraseña" name="contrasena" id="login_contrasena" required>
+                    </div>
+                    <div class="forgot">
+                        <span></span>
+                    </div>
+                    <button type="button" class="btn bkg" onclick="login()">Iniciar Sesión</button>
+                </form>
+            </div>
+    
+            <div class="form sign_up">
+                
+                
+                <h3>Regístrate</h3>
+                <div class="close-button">
+                    <i class="bi bi-x" onclick="cerrar()"></i>
+                </div>
+                <span>Llena los siguientes campos y luego inicia sesión.</span>
+                <form id="register_form">
+                    <div class="type">
+                        <input type="text" name="nombre" placeholder="Nombre" id="register_nombre" required>
+                    </div>
+                    <div class="type">
+                        <input type="text" name="apellido" placeholder="Apellido" id="register_apellido" required>
+                    </div>
+                    <div class="type">
+                        <input type="text" name="nombre_usuario" placeholder="Nombre de usuario" id="register_nombre_usuario" required>
+                    </div>
+                    <div class="type">
+                        <input type="email" name="correo_electronico" placeholder="Correo" id="register_correo_electronico" required>
+                    </div>
+                    <div class="type">
+                        <input type="password" name="contrasena" placeholder="Contraseña" id="register_contrasena" required>
+                    </div>
+                    <button type="button" class="btn bkg" onclick="registrar()">Crear Cuenta</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="overlay">
+            <div class="page page_signIn">
+                <h3>¡Bienvenido!</h3>
+                <p>Si aún no tienes una cuenta, regístrate.</p>
+                <button class="btn btnSign-in">Crear cuenta <i class="bi bi-arrow-right"></i></button>
+            </div>
+            <div class="page page_signUp">
+                <h3>¿Ya tienes cuenta?</h3>
+                <p>Ingresa tu usuario y contraseña para poder acceder.</p>
+                <button class="btn btnSign-up"><i class="bi bi-arrow-left"></i> Inicar Sesion</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- link script -->
+    <script src="/Login/mainLogin.js"></script>
+    <script>
+        function cerrar() {
+            window.location.href = '/PaginasDeInicio/Invitado.html'; /* Cambia la URL a donde quieres redirigir */
+        }
+
+        async function login() {
+            const nombre_usuario = document.getElementById('login_nombre_usuario').value;
+            const contrasena = document.getElementById('login_contrasena').value;
+        
+            try {
+                const response = await fetch('http://127.0.0.1:8000/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        nombre_usuario: nombre_usuario,
+                        contrasena: contrasena
+                    })
+                });
+        
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.detail);
+                }
+        
+                // Redirigir a la página de carga
+                window.location.href = 'CargaLogin.html';
+        
+            } catch (error) {
+                alert('Error al iniciar sesión: ' + error.message);
+                console.error('Error:', error);
+            }
+        }
+        
+
+        async function registrar() {
+            const nombre = document.getElementById('register_nombre').value;
+            const apellido = document.getElementById('register_apellido').value;
+            const nombre_usuario = document.getElementById('register_nombre_usuario').value;
+            const correo_electronico = document.getElementById('register_correo_electronico').value;
+            const contrasena = document.getElementById('register_contrasena').value;
+        
+            try {
+                const response = await fetch('http://127.0.0.1:8000/cliente/registrar', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        nombre: nombre,
+                        apellido: apellido,
+                        nombre_usuario: nombre_usuario,
+                        correo_electronico: correo_electronico,
+                        contrasena: contrasena
+                    })
+                });
+        
+                if (!response.ok) {
+                    throw new Error('Error al registrar');
+                }
+        
+                const data = await response.json();
+        
+                // Mostrar mensaje de éxito usando SweetAlert2
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    icon: "success",
+                    title: data.mensaje
+                });
+        
+                // Asignar los valores de registro al formulario de inicio de sesión
+                document.getElementById('login_nombre_usuario').value = nombre_usuario;
+                document.getElementById('login_contrasena').value = contrasena;
+        
+            } catch (error) {
+                // Mostrar mensaje de error usando SweetAlert2
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Error al registrar',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+                console.error('Error:', error);
+            }
+        }
+        
+    
+    </script>
+    
+</body>
+</html>
