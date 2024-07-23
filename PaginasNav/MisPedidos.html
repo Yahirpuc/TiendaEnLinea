@@ -9,6 +9,8 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.theme.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert2 script -->
+  <link rel="icon" href="/images/ImgsPag/logo.png" type="image/png">
   <style>
     body {
       background: linear-gradient(500deg, #d4ffeb 0%, #ced1fc 50%, #FFFFFF 100%);
@@ -29,10 +31,19 @@
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
 
+    
+
     .navbar-item {
       position: relative;
-      padding-bottom: 0.5rem;
+      padding-right: 24px;
+      /* Asegura espacio adecuado para el contador */
     }
+    .navbar-item.active {
+      color: #000; /* Color para indicar que está activo */
+      font-weight: bold; /* O cualquier otro estilo que prefieras */
+    }
+    
+
 
     .navbar-item::before {
       content: "";
@@ -128,9 +139,12 @@
           <span class="material-icons mr-1">local_shipping</span> Mis Pedidos
         </a>
         <a href="/PaginasNav/CarritoDeCompras.html"
-          class="navbar-item text-gray-600 hover:text-gray-900 flex items-center">
+          class="navbar-item text-gray-600 hover:text-gray-900 flex items-center relative">
           <span class="material-icons mr-1">shopping_cart</span> Mi carrito
+          <span id="cart-count"
+            class="absolute top-0 right-0 bg-red-600 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">0</span>
         </a>
+
         <a href="/PaginasDeInicio/Invitado.html" id="logout-button"
           class="bg-green-600 text-white px-4 py-2 rounded-md flex items-center hover:bg-red-600">
           <span class="material-icons mr-1">logout</span> <!-- Botom Cerrar Sesion-->
@@ -147,12 +161,12 @@
   <div class="container mx-auto py-16">
     <div class="flex justify-center items-center mb-8">
 
-      <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl" style="font-size: 30px">Gestiona tus
+      <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl" style="font-size: 40px">Gestiona tus
         pedidos...</h1>
     </div>
     <div class="bg-white shadow-md rounded-lg p-6">
       <div class="overflow-x-auto">
-        <table class="min-w-full bg-white">
+        <table class="min-w-full bg-white mx-auto">
           <thead>
             <tr>
               <th class="py-3 px-4 border-b">Producto</th>
@@ -192,12 +206,12 @@
             const precioTotal = parseFloat(pedido.precio_total);
             const fila = document.createElement('tr');
             fila.innerHTML = `
-              <td class="py-2 px-4">${pedido.nombre_producto}</td>
-              <td class="py-2 px-4">$${precioTotal.toFixed(2)}</td>
-              <td class="py-2 px-4">${pedido.cantidad}</td>
-              <td class="py-2 px-4">$${precioTotal.toFixed(2)}</td>
-              <td class="py-2 px-4">${pedido.fecha_pedido}</td>
-              <td class="py-2 px-4">
+              <td class="py-2 px-4 text-center">${pedido.nombre_producto}</td>
+              <td class="py-2 px-4 text-center">$${precioTotal.toFixed(2)}</td>
+              <td class="py-2 px-4 text-center">${pedido.cantidad}</td>
+              <td class="py-2 px-4 text-center">$${precioTotal.toFixed(2)}</td>
+              <td class="py-2 px-4 text-center">${pedido.fecha_pedido}</td>
+              <td class="py-2 px-4 text-center">
                 <button class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700" onclick="cancelarPedido(${pedido.pedido_id})">
                   <i class="material-icons">delete</i>
                 </button>
@@ -210,6 +224,28 @@
           console.error('Error al cargar los pedidos:', error);
         });
     }
+
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      }
+    });
+
+    // Función para actualizar el contador del carrito
+    function actualizarContadorCarrito() {
+      let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+      let totalCantidad = carrito.reduce((acc, producto) => acc + producto.cantidad, 0);
+      document.getElementById('cart-count').textContent = totalCantidad;
+    }
+
+    // Inicializar el contador del carrito
+    actualizarContadorCarrito();
 
     function cancelarPedido(pedido_id) {
       console.log('Cancelando pedido:', pedido_id);
@@ -225,18 +261,32 @@
         })
         .then(data => {
           if (data.mensaje) {
-            alert(data.mensaje);
-            cargarPedidos();
+            Toast.fire({
+              icon: 'success',
+              position: 'top',
+              title: data.mensaje
+
+            });
+            cargarPedidos(); // Recarga los pedidos
           } else {
             console.error('Error:', data);
-            alert('Error al cancelar el pedido');
+            Toast.fire({
+              icon: 'error',
+              position: 'top',
+              title: 'Error al cancelar el pedido'
+            });
           }
         })
         .catch(error => {
-          alert('Error al cancelar el pedido');
+          Toast.fire({
+            icon: 'error',
+            position: 'top',
+            title: 'Error al cancelar el pedido'
+          });
           console.error('Error:', error);
         });
     }
+
     /* Función de cerrar sesión */
     document.getElementById('logout-button').addEventListener('click', function (event) {
       event.preventDefault();
@@ -261,6 +311,17 @@
           alert('Error al cerrar sesión');
         });
     });
+
+    // Mantener seleccionada la opción en la barra de navegación
+    const currentPath = window.location.pathname;
+    const navItems = document.querySelectorAll('.navbar-item');
+
+    navItems.forEach(item => {
+      if (item.getAttribute('href') === currentPath) {
+        item.classList.add('active');
+      }
+    });
+
   </script>
   <script>
     fetch('http://127.0.0.1:8000/user-page', {

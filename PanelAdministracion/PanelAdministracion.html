@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <link rel="icon" href="/images/ImgsPag/logo.png" type="image/png">
   <style>
     /* Animation */
     @keyframes fadeIn {
@@ -407,9 +408,9 @@
           </a>
         </li>
 
-        <li class="sidebar-list-item" onclick="showSection('pedidos')">
+        <li class="sidebar-list-item" onclick="showSection('ventas')">
           <a href="#">
-            <span class="material-icons-outlined">shopping_cart</span> Pedidos
+            <span class="material-icons-outlined">attach_money</span> Ventas
           </a>
         </li>
       </ul>
@@ -443,15 +444,15 @@
           </div>
           <div class="card" id="card-pedidos">
             <div class="card-inner">
-              <h3>PEDIDOS</h3>
-              <span class="material-icons-outlined">shopping_cart</span>
+              <h3>VENTAS</h3>
+              <span class="material-icons-outlined">attach_money</span>
             </div>
             <h1 id="pedidos-count">50</h1>
           </div>
         </div>
         <div class="charts">
           <div class="charts-card">
-            <h2 class="chart-title" style="font-size: 20px;">PEDIDOS POR MES</h2>
+            <h2 class="chart-title" style="font-size: 20px;">VENTAS POR MES</h2>
             <div id="bar-chart"></div>
           </div>
           <div class="charts-card">
@@ -463,33 +464,43 @@
 
 
 
-      <div id="clientes" class="section-content" style="display: none;">
+      <div id="clientes" class="section-content hidden">
         <section class="section">
-          <div class="container">
-            <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl" style="font-size: 40px;">Sesiones de
-              Clientes</h1>
-            <div id="no-data" class="notification is-warning" style="display: none;">
-              Nada por aqui
+          <div class="container mx-auto p-4">
+            <div class="flex items-center justify-between mb-4">
+              <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-4xl" style="font-size: 40px;">Todos los Clientes</h1>
+              <div class="relative">
+                <input type="text" id="search-client-name" placeholder="Buscar por nombre del cliente"
+                  class="border border-gray-300 rounded-lg px-4 py-2 text-gray-900 pl-10 pr-12 focus:outline-none focus:ring-2 focus:ring-blue-500 w-72" />
+                <button id="search-client-button" class="absolute inset-y-0 right-0 flex items-center pr-3">
+                  <i class="fas fa-search text-gray-500 hover:text-gray-700"></i>
+                </button>
+              </div>
             </div>
-
-            <table class="table is-fullwidth is-striped" style="margin-top: 30px;">
-
-              <thead>
-                <tr>
-                  <th>SesionID</th>
-                  <th>ClienteID</th>
-                  <th>Nombre Cliente</th>
-                  <th>Nombre Usuario</th>
-                  <th>Fecha Inicio</th>
-                  <th>Fecha Cierre</th>
-                  <th>IP</th>
-                </tr>
-              </thead>
-              <tbody id="table-body-clientes"></tbody>
-            </table>
+            <div id="no-data-clientes" class="notification is-warning hidden">
+              No se encontró ninguna coincidencia.
+            </div>
+            
+            <div class="table-container">
+              <table class="table w-full divide-y divide-gray-200 mt-8">
+                <thead>
+                  <tr>
+                    <th class="px-4 py-2 text-left">SesionID</th>
+                    <th class="px-4 py-2 text-left">ClienteID</th>
+                    <th class="px-4 py-2 text-left">Nombre Cliente</th>
+                    <th class="px-4 py-2 text-left">Nombre Usuario</th>
+                    <th class="px-4 py-2 text-left">Fecha Inicio</th>
+                    <th class="px-4 py-2 text-left">Fecha Cierre</th>
+                    <th class="px-4 py-2 text-left">IP</th>
+                  </tr>
+                </thead>
+                <tbody id="table-body-clientes"></tbody>
+              </table>
+            </div>
           </div>
         </section>
       </div>
+      
 
       <div id="productos" class="section-content" style="display: none;">
         <section class="section">
@@ -498,9 +509,9 @@
 
             <!-- Formulario de creación de producto -->
             <div class="box">
-              <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl" style="font-size: 40px;">Crear
+              <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-4xl" style="font-size: 40px;">Crear
                 Nuevo Producto</h1>
-              <form id="crear-producto-form" style="margin-top: 30px">
+              <form id="crear-producto-form" style="margin-top: 30px" onsubmit="enviarFormulario(event)">
                 <div class="field">
                   <label class="label">Nombre del Producto</label>
                   <div class="control">
@@ -544,28 +555,34 @@
             </div>
 
             <!-- Tabla de productos -->
-            <div class="box">
-              <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl" style="font-size: 40px;">Lista de
-                Productos</h1>
-              <div id="no-data-clientes" class="notification is-warning" style="display: none;">
-                No hay productos disponibles.
-              </div>
-              <div class="table-container">
-                <table class="table is-fullwidth is-striped" style="margin-top: 30px">
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Nombre</th>
-                      <th>Precio</th>
-                      <th>Stock</th>
-                      <th>Acciones</th>
-                    </tr>
-                  </thead>
-                  <tbody id="table-body"></tbody>
-                </table>
+            <div class="flex items-center justify-between mb-4">
+              <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-4xl" style="font-size: 40px;">Lista de Productos</h1>
+              <div class="relative">
+                <input type="text" id="search-product-name" placeholder="Buscar por nombre del producto" class="border border-gray-300 rounded-lg px-4 py-2 text-gray-900 pl-10 pr-12 focus:outline-none focus:ring-2 focus:ring-blue-500 w-72" />
+                <button id="search-product-button" class="absolute inset-y-0 right-0 flex items-center pr-3">
+                  <i class="fas fa-search text-gray-500 hover:text-gray-700"></i>
+                </button>
               </div>
             </div>
-
+            <div id="no-data-productos" class="notification is-warning" style="display: none;">
+              No se encontró ninguna coincidencia.
+            </div>
+            <div class="table-container">
+              <table class="table is-fullwidth is-striped" style="margin-top: 30px">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="table-body"></tbody>
+              </table>
+            </div>
+          </div>
+    
             <!-- Formulario de edición de producto en modal -->
             <div id="modal-edicion" class="modal">
               <div class="modal-content">
@@ -605,7 +622,7 @@
                 </div>
               </div>
             </div>
-          </div>
+        
         </section>
       </div>
 
@@ -628,11 +645,23 @@
           </div>
         </section>
       </div>
+
+      <!--Seccion de Stock de Productos-->
       <div id="stock-productos" class="section-content" style="display: none;">
         <section class="section">
           <div class="container">
-            <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl" style="font-size: 40px;">Verificar
-              Stock</h1>
+            <div class="flex items-center justify-between mb-4">
+              <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl" style="font-size: 40px;">Verificar Stock</h1>
+              <div class="relative">
+                <input type="text" id="search-stock" placeholder="Buscar por nombre del producto" class="border border-gray-300 rounded-lg px-4 py-2 text-gray-900 pl-10 pr-12 focus:outline-none focus:ring-2 focus:ring-blue-500 w-72" />
+                <button id="search-stock-button" class="absolute inset-y-0 right-0 flex items-center pr-3">
+                  <i class="fas fa-search text-gray-500 hover:text-gray-700"></i>
+                </button>
+              </div>
+            </div>
+            <div id="no-data-stock" class="notification is-warning" style="display: none;">
+              No se encontró ninguna coincidencia.
+            </div>
             <div class="table-container">
               <table class="table is-fullwidth is-striped" style="margin-top: 30px">
                 <thead>
@@ -653,25 +682,40 @@
 
 
 
-      <div id="pedidos" class="section-content" style="display: none;">
+     
+      <div id="ventas" class="section-content hidden" style="display: block;">
         <section class="section">
           <div class="container">
-            <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl" style="font-size: 40px;">Pedidos
-            </h1>
+            <div class="flex items-center justify-between mb-4">
+              <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl" style="font-size: 40px;">Ventas</h1>
+              <div class="relative">
+                <input type="text" id="search-sale" placeholder="Buscar por producto o usuario" class="border border-gray-300 rounded-lg px-4 py-2 text-gray-900 pl-10 pr-12 focus:outline-none focus:ring-2 focus:ring-blue-500 w-72" />
+                <button id="search-sale-button" class="absolute inset-y-0 right-0 flex items-center pr-3">
+                  <i class="fas fa-search text-gray-500 hover:text-gray-700"></i>
+                </button>
+              </div>
+            </div>
+            <div id="no-data-ventas" class="notification is-warning" style="display: none;">
+              No se encontró ninguna coincidencia.
+            </div>
             <div class="table-container">
               <table class="table is-fullwidth is-striped" style="margin-top: 30px">
                 <thead>
                   <tr>
+                    <th>Venta ID</th>
                     <th>Pedido ID</th>
-                    <th>Nombre del Cliente</th>
-                    <th>Nombre del Producto</th>
+                    <th>Cliente ID</th>
+                    <th>Nombre Usuario</th>
+                    <th>Nombre Producto</th>
                     <th>Cantidad</th>
-                    <th>Fecha de Compra</th>
+                    <th>Total Compra</th>
+                    <th>Fecha Venta</th>
                   </tr>
                 </thead>
-                <tbody id="pedidos-container"></tbody>
+                <tbody id="ventas-container"></tbody>
               </table>
             </div>
+        
           </div>
         </section>
       </div>
@@ -682,6 +726,103 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.5/apexcharts.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const searchClientName = document.getElementById('search-client-name');
+      const tableBodyClientes = document.getElementById('table-body-clientes');
+      const noDataClientes = document.getElementById('no-data-clientes');
+    
+      searchClientName.addEventListener('input', function () {
+        const filter = searchClientName.value.toLowerCase();
+        const rows = tableBodyClientes.querySelectorAll('tr');
+    
+        let found = false;
+        rows.forEach(row => {
+          const clientName = row.querySelector('td:nth-child(3)').innerText.toLowerCase(); // Ajusta el índice según la columna correcta
+          if (clientName.includes(filter)) {
+            row.style.display = '';
+            found = true;
+          } else {
+            row.style.display = 'none';
+          }
+        });
+    
+        // Muestra el mensaje si no se encuentran resultados
+        noDataClientes.style.display = found ? 'none' : 'block';
+      });
+    });
+    
+    
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const searchProductName = document.getElementById('search-product-name');
+      const searchSale = document.getElementById('search-sale');
+      const searchStock = document.getElementById('search-stock');
+    
+      searchProductName.addEventListener('input', function () {
+        const filter = searchProductName.value.toLowerCase();
+        const rows = document.querySelectorAll('#table-body tr');
+    
+        let found = false;
+        rows.forEach(row => {
+          const productName = row.querySelector('td:nth-child(2)').innerText.toLowerCase();
+          if (productName.includes(filter)) {
+            row.style.display = '';
+            found = true;
+          } else {
+            row.style.display = 'none';
+          }
+        });
+    
+        document.getElementById('no-data-productos').style.display = found ? 'none' : '';
+      });
+    
+      searchSale.addEventListener('input', function () {
+        const filter = searchSale.value.toLowerCase();
+        const rows = document.querySelectorAll('#ventas-container tr');
+    
+        let found = false;
+        rows.forEach(row => {
+          const userName = row.querySelector('td:nth-child(4)').innerText.toLowerCase();
+          const productName = row.querySelector('td:nth-child(5)').innerText.toLowerCase();
+          if (userName.includes(filter) || productName.includes(filter)) {
+            row.style.display = '';
+            found = true;
+          } else {
+            row.style.display = 'none';
+          }
+        });
+    
+        document.getElementById('no-data-ventas').style.display = found ? 'none' : '';
+      });
+    
+      searchStock.addEventListener('input', function () {
+        const filter = searchStock.value.toLowerCase();
+        const rows = document.querySelectorAll('#stock-container tr');
+    
+        let found = false;
+        rows.forEach(row => {
+          const productName = row.querySelector('td:nth-child(2)').innerText.toLowerCase();
+          if (productName.includes(filter)) {
+            row.style.display = '';
+            found = true;
+          } else {
+            row.style.display = 'none';
+          }
+        });
+    
+        document.getElementById('no-data-stock').style.display = found ? 'none' : '';
+      });
+    });
+    
+    
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      showSection('panel'); // Mostrar la sección del panel por defecto al cargar la página
+    });
+    
     // SIDEBAR TOGGLE
     var sidebarOpen = false;
     var sidebar = document.getElementById("sidebar");
@@ -715,7 +856,7 @@
         const response = await fetch('http://127.0.0.1:8000/productos');
         productos = await response.json();
         const tableBody = document.getElementById('table-body');
-        const noDataMessage = document.getElementById('no-data');
+        const noDataMessage = document.getElementById('no-data-productos');
 
         tableBody.innerHTML = '';
 
@@ -853,6 +994,7 @@
           method: 'POST',
           body: formData
         });
+        
 
         if (response.ok) {
           Swal.fire(
@@ -861,7 +1003,11 @@
             'success'
           ).then(() => {
             cargarProductos();
+            
+            
           });
+          
+          
         } else {
           const errorData = await response.json();
           throw new Error(errorData.detail);
@@ -959,28 +1105,42 @@
     document.querySelector('li.sidebar-list-item[onclick="showSection(\'stock-productos\')"]').addEventListener('click', cargarStock);
 
 
-    // CARGAR PEDIDOS
-    async function cargarPedidos() {
+    // CARGAR VENTAS
+    async function cargarVentas() {
       try {
-        const response = await fetch('http://127.0.0.1:8000/pedidos');
-        const pedidos = await response.json();
-        const pedidosContainer = document.getElementById('pedidos-container');
-        pedidosContainer.innerHTML = '';
-        pedidos.forEach(pedido => {
-          const row = document.createElement('tr');
-          row.innerHTML = `
-                        <td>${pedido.pedido_id}</td>
-                        <td>${pedido.cliente_nombre}</td>
-                        <td>${pedido.producto_nombre}</td>
-                        <td>${pedido.cantidad}</td>
-                        <td>${pedido.fecha_compra}</td>
-                    `;
-          pedidosContainer.appendChild(row);
-        });
+          const response = await fetch('http://127.0.0.1:8000/ventas');
+          const ventas = await response.json();
+          const tableBody = document.getElementById('ventas-container');
+
+          tableBody.innerHTML = '';
+
+          if (ventas.length === 0) {
+              tableBody.innerHTML = '<tr><td colspan="8">No hay ventas disponibles.</td></tr>';
+          } else {
+              ventas.forEach(venta => {
+                  const row = document.createElement('tr');
+                  row.innerHTML = `
+                      <td>${venta.venta_id}</td>
+                      <td>${venta.pedido_id}</td>
+                      <td>${venta.cliente_id}</td>
+                      <td>${venta.nombre_usuario}</td>
+                      <td>${venta.nombre_producto}</td>
+                      <td>${venta.cantidad}</td>
+                      <td>${venta.total_compra}</td>
+                      <td>${venta.fecha_venta}</td>
+                  `;
+                  tableBody.appendChild(row);
+              });
+          }
       } catch (error) {
-        console.error('Error al cargar los pedidos:', error);
+          console.error('Error al cargar ventas:', error);
       }
-    }
+  }
+
+  // Llama a la función cargarVentas cuando la página se cargue
+  document.addEventListener('DOMContentLoaded', cargarVentas);
+
+
 
     document.addEventListener('DOMContentLoaded', () => {
       // Por defecto carga los productos
@@ -1004,8 +1164,8 @@
             case 'stock':
               cargarStock();
               break;
-            case 'pedidos':
-              cargarPedidos();
+            case 'ventas':
+              cargarVentass();
               break;
             default:
               break;
@@ -1097,7 +1257,7 @@
             height: 350
           },
           series: [{
-            name: 'Pedidos',
+            name: 'Ventas',
             data: datos.barras
           }],
           xaxis: {

@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/Login/styleLogin.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" integrity="sha512-ZnR2wlLbSbr8/c9AgLg3jQPAattCUImNsae6NHYnS9KrIwRdcY9DxFotXhNAKIKbAXlRnujIqUWoXXwqyFOeIQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="icon" href="/images/ImgsPag/logo.png" type="image/png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form</title>
     <style>
@@ -116,7 +117,7 @@
     <script src="/Login/mainLogin.js"></script>
     <script>
         function cerrar() {
-            window.location.href = '/PaginasDeInicio/Invitado.html'; /* Cambia la URL a donde quieres redirigir */
+            window.location.href = '/Index.html'; /* Cambia la URL a donde quieres redirigir */
         }
 
         async function login() {
@@ -134,21 +135,38 @@
                         contrasena: contrasena
                     })
                 });
-        
+            
                 if (!response.ok) {
                     const errorData = await response.json();
                     throw new Error(errorData.detail);
                 }
-        
+            
                 // Redirigir a la página de carga
                 window.location.href = 'CargaLogin.html';
-        
+            
             } catch (error) {
-                alert('Error al iniciar sesión: ' + error.message);
+                // Mostrar mensaje de error usando SweetAlert2
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top",
+                    showConfirmButton: false,
+                    timer: 5000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Error al iniciar sesión',
+                    text: error.message || 'Ocurrió un problema al intentar iniciar sesión.'
+                });
+                
                 console.error('Error:', error);
             }
         }
-        
+            
 
         async function registrar() {
             const nombre = document.getElementById('register_nombre').value;
@@ -171,17 +189,17 @@
                         contrasena: contrasena
                     })
                 });
-        
+            
                 if (!response.ok) {
                     throw new Error('Error al registrar');
                 }
-        
+            
                 const data = await response.json();
-        
+            
                 // Mostrar mensaje de éxito usando SweetAlert2
                 const Toast = Swal.mixin({
                     toast: true,
-                    position: "top-end",
+                    position: "top",
                     showConfirmButton: false,
                     timer: 3000,
                     timerProgressBar: true,
@@ -194,22 +212,32 @@
                     icon: "success",
                     title: data.mensaje
                 });
-        
+            
                 // Asignar los valores de registro al formulario de inicio de sesión
                 document.getElementById('login_nombre_usuario').value = nombre_usuario;
                 document.getElementById('login_contrasena').value = contrasena;
-        
+            
             } catch (error) {
                 // Mostrar mensaje de error usando SweetAlert2
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Error al registrar',
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top",
                     showConfirmButton: false,
-                    timer: 3000
+                    timer: 5000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
                 });
+                Toast.fire({
+                    icon: 'error',
+                    title: error.message || 'Error al registrar'
+                });
+                
                 console.error('Error:', error);
             }
+            
         }
         
     

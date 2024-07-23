@@ -1,0 +1,15 @@
+{
+    "builds": [
+      {
+        "src": "./",
+        "use": "Dockerfile"
+      }
+    ],
+    "deployments": [
+      {
+        "src": "./",
+        "use": "static"
+      }
+    ]
+  }
+  

@@ -9,6 +9,8 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.theme.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert2 script -->
+  <link rel="icon" href="/images/ImgsPag/logo.png" type="image/png">
   <style>
    
     body {
@@ -37,8 +39,14 @@
 
     .navbar-item {
       position: relative;
-      padding-bottom: 0.5rem;
+      padding-right: 24px; 
     }
+    .navbar-item.active {
+      color: #000; /* Color para indicar que está activo */
+      font-weight: bold; /* O cualquier otro estilo que prefieras */
+    }
+    
+    
 
     .navbar-item::before {
       content: "";
@@ -149,8 +157,9 @@
  
 <main>
     <!-- Carrito de Compras -->
+     
   <div class="container my-5">
-    <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl" style="font-size: 30px">Carrito de Compras</h1>
+    <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl" style="font-size: 40px">Carrito de Compras</h1>
     <div class="flex justify-center">
       <div class="w-2/3">
         <div class="overflow-x-auto">
@@ -180,6 +189,7 @@
   </div>
 
 </main>
+
   
 
   <script>
@@ -197,13 +207,13 @@
       carrito.forEach(producto => {
         const fila = document.createElement('tr');
         fila.innerHTML = `
-          <td class="py-2">${producto.nombre}</td>
-          <td class="py-2">$${producto.precio.toFixed(2)}</td>
-          <td class="py-2">
+          <td class="py-2 text-center">${producto.nombre}</td>
+          <td class="py-2 text-center">$${producto.precio.toFixed(2)}</td>
+          <td class="py-2 text-center">
             <input type="number" value="${producto.cantidad}" min="1" class="input cantidad-input w-16" data-nombre="${producto.nombre}">
           </td>
-          <td class="py-2">$${(producto.precio * producto.cantidad).toFixed(2)}</td>
-          <td class="py-2">
+          <td class="py-2 text-center">$${(producto.precio * producto.cantidad).toFixed(2)}</td>
+          <td class="py-2 text-center">
             <button class="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700" onclick="eliminarProducto('${producto.nombre}')">
               <i class="material-icons">delete</i>
             </button>
@@ -222,6 +232,18 @@
         });
       });
     }
+
+
+    // Mantener seleccionada la opción en la barra de navegación
+    const currentPath = window.location.pathname;
+    const navItems = document.querySelectorAll('.navbar-item');
+
+    navItems.forEach(item => {
+      if (item.getAttribute('href') === currentPath) {
+        item.classList.add('active');
+      }
+    });
+
 
     function eliminarProducto(nombre) {
       let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
@@ -245,35 +267,93 @@
     function procederAlPago() {
       const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
       if (carrito.length === 0) {
-        alert('El carrito está vacío');
-        return;
+          const Toast = Swal.mixin({
+              toast: true,
+              position: "top",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                  toast.onmouseenter = Swal.stopTimer;
+                  toast.onmouseleave = Swal.resumeTimer;
+              }
+          });
+          Toast.fire({
+              icon: 'warning',
+              title: 'El carrito está vacío'
+          });
+          return;
       }
-
+  
       carrito.forEach(producto => {
-        fetch('http://127.0.0.1:8000/comprar-producto', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            nombre_producto: producto.nombre,
-            cantidad: producto.cantidad
+          fetch('http://127.0.0.1:8000/comprar-producto', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                  nombre_producto: producto.nombre,
+                  cantidad: producto.cantidad
+              })
           })
-        })
-        .then(response => response.json())
-        .then(data => {
-          alert(data.mensaje);
-          if (data.mensaje === "Compra realizada exitosamente") {
-            localStorage.removeItem('carrito');
-            window.location.href = '/PaginasDeInicio/Usuario.html';
-          }
-        })
-        .catch(error => {
-          alert('Error al procesar el pago');
-          console.error('Error:', error);
-        });
+          .then(response => response.json())
+          .then(data => {
+              if (data.mensaje === "Compra realizada exitosamente") {
+                  Swal.fire({
+                      position: "center",
+                      icon: "success",
+                      title: "Compra realizada exitosamente",
+                      showConfirmButton: false,
+                      timer: 1500
+                  });
+  
+                  localStorage.removeItem('carrito');
+                  setTimeout(function() {
+                    window.location.href = '/PaginasDeInicio/Usuario.html';
+                  }, 2000);
+              } else {
+                  const Toast = Swal.mixin({
+                      toast: true,
+                      position: "top",
+                      showConfirmButton: false,
+                      timer: 3000,
+                      timerProgressBar: true,
+                      didOpen: (toast) => {
+                          toast.onmouseenter = Swal.stopTimer;
+                          toast.onmouseleave = Swal.resumeTimer;
+                      }
+                  });
+                  Toast.fire({
+                      icon: 'info',
+                      title: data.mensaje,
+                      
+                  });
+              }
+          })
+          .catch(error => {
+              const Toast = Swal.mixin({
+                  toast: true,
+                  position: "top",
+                  showConfirmButton: false,
+                  timer: 3000,
+                  timerProgressBar: true,
+                  didOpen: (toast) => {
+                      toast.onmouseenter = Swal.stopTimer;
+                      toast.onmouseleave = Swal.resumeTimer;
+                  }
+              });
+              Toast.fire({
+                  icon: 'error',
+                  title: 'Error al procesar el pago',
+                  text: error.message || 'Ocurrió un problema al procesar el pago.'
+              });
+              console.error('Error:', error);
+          });
       });
-    }
+  }
+  
+  
+  
     /* Función de cerrar sesión */
     document.getElementById('logout-button').addEventListener('click', function (event) {
       event.preventDefault();

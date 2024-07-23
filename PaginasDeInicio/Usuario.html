@@ -9,9 +9,10 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.theme.min.css" rel="stylesheet">
-  <style>
-   
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert2 script -->
+  <link rel="icon" href="/images/ImgsPag/logo.png" type="image/png">
 
+  <style>
     body {
       background: linear-gradient(500deg, #d4ffeb 0%, #ced1fc 50%, #FFFFFF 100%);
     }
@@ -33,8 +34,15 @@
 
     .navbar-item {
       position: relative;
-      padding-bottom: 0.5rem;
+      padding-right: 24px; 
     }
+    .navbar-item.active {
+      color: #000; /* Color para indicar que está activo */
+      font-weight: bold; /* O cualquier otro estilo que prefieras */
+    }
+  
+
+    
 
     .navbar-item::before {
       content: "";
@@ -110,10 +118,13 @@
 
       /* Rojo oscuro Tailwind */
     }
+
     .product-card img {
       width: 100%;
-      height: 200px; /* Ajusta este valor según tus necesidades */
-      object-fit: cover; /* Esto asegurará que la imagen se ajuste al contenedor manteniendo su proporción */
+      height: 200px;
+      /* Ajusta este valor según tus necesidades */
+      object-fit: cover;
+      /* Esto asegurará que la imagen se ajuste al contenedor manteniendo su proporción */
     }
   </style>
 </head>
@@ -121,10 +132,12 @@
 <body class="bg-white text-gray-900">
 
   <!-- Barra de navegación -->
+  <!-- Barra de navegación -->
   <nav class="bg-blur shadow-md w-full z-10">
     <div class="container mx-auto px-4 py-4 flex justify-between items-center">
       <div class="text-lg font-bold flex items-center">
-        <span class="material-icons mr-2"><img src="/images/ImgsPag/logo.png" style="width: 50px; height: 50px;"></span>
+        <span class="material-icons mr-2"><img src="/images/ImgsPag/logo.png"
+            style="margin-left: 7px; width: 50px; height: 50px;"></span>
         <h1 style="font-size: 40px;">InnovaByte</h1>
       </div>
       <div class="space-x-4 flex items-center">
@@ -135,10 +148,13 @@
           <span class="material-icons mr-1">local_shipping</span> Mis Pedidos
         </a>
         <a href="/PaginasNav/CarritoDeCompras.html"
-          class="navbar-item text-gray-600 hover:text-gray-900 flex items-center">
-          <span class="material-icons mr-1">shopping_cart</span> Mi carrito
+          class="navbar-item text-gray-600 hover:text-gray-900 flex items-center relative">
+          <span class="material-icons mr-1">shopping_cart</span> Mi carrito     
+          <span id="cart-count"
+            class="absolute top-0 right-0 bg-red-600 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">0</span>
         </a>
-        <a href="/Login/login.html" id="logout-button"
+
+        <a href="./PaginasDeInicio/Invitado.html" id="logout-button"
           class="bg-green-600 text-white px-4 py-2 rounded-md flex items-center hover:bg-red-600">
           <span class="material-icons mr-1">logout</span> <!-- Botom Cerrar Sesion-->
         </a>
@@ -154,13 +170,13 @@
     <div class="glide__track" data-glide-el="track">
       <ul class="glide__slides">
         <li class="glide__slide">
-          <img src="/images/ImgsPag/FotoCarrusel3.png" alt="Imagen 1">
+          <img src="/images/ImgsPag/FotoCarrusel1.jpg" alt="Imagen 1">
         </li>
         <li class="glide__slide">
           <img src="/images/ImgsPag/FotoCarrusel2.png" alt="Imagen 2">
         </li>
         <li class="glide__slide">
-          <img src="/images/ImgsPag/FotoCarrusel1.png" alt="Imagen 3">
+          <img src="/images/ImgsPag/FotoCarrusel3.png" alt="Imagen 3">
         </li>
       </ul>
     </div>
@@ -174,7 +190,8 @@
 
   <!-- Sección de productos destacados -->
   <section class="container mx-auto px-4 py-16">
-    <h2 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl" style="font-size: 30px;">Productos recien agregados</h2>
+    <h2 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl" style="font-size: 40px;">Últimos Productos
+      Agregados</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" id="productos-container" style="margin-top: 30px">
       <!-- Los productos se cargarán aquí -->
     </div>
@@ -210,7 +227,7 @@
   <!-- Footer -->
   <footer class="bg-gray-100 py-4">
     <div class="container mx-auto text-center text-gray-600">
-      <p>&copy; 2024 Universidad Tecnológica Metropolitana. Todos los derechos reservados.</p>
+      <p>&copy; 2024 Universidad Tecnológica Metropolitana. <a href="https://github.com/Yahirpuc">YAOP</a>.</p>
     </div>
   </footer>
 
@@ -249,6 +266,30 @@
         });
     });
 
+
+    // Función para actualizar el contador del carrito
+    function actualizarContadorCarrito() {
+      let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+      let totalCantidad = carrito.reduce((acc, producto) => acc + producto.cantidad, 0);
+      document.getElementById('cart-count').textContent = totalCantidad;
+    }
+
+    // Inicializar el contador del carrito
+    actualizarContadorCarrito();
+
+    // Mantener seleccionada la opción en la barra de navegación
+    const currentPath = window.location.pathname;
+    const navItems = document.querySelectorAll('.navbar-item');
+
+    navItems.forEach(item => {
+      if (item.getAttribute('href') === currentPath) {
+        item.classList.add('active');
+      }
+    });
+
+
+
+
     /* Función de cerrar sesión */
     document.getElementById('logout-button').addEventListener('click', function (event) {
       event.preventDefault();
@@ -285,29 +326,41 @@
         carrito.push(producto);
       }
 
+
       localStorage.setItem('carrito', JSON.stringify(carrito));
-      alert('Producto agregado al carrito');
+      Swal.fire({
+        icon: 'success',
+        title: 'Producto agregado al carrito',
+        showConfirmButton: false,
+        timer: 3000,
+        toast: true,
+        position: 'top'
+
+      });
+      setTimeout(function() {
+        window.location.href = '/PaginasDeInicio/Usuario.html';
+      }, 2000);
     }
   </script>
   <script>
     // Verificar el rol del usuario al cargar la página
     fetch('http://127.0.0.1:8000/user-role', {
-        method: 'GET',
-        credentials: 'include'
+      method: 'GET',
+      credentials: 'include'
     })
-    .then(response => response.json())
-    .then(data => {
+      .then(response => response.json())
+      .then(data => {
         if (data.role !== 'cliente') {
-            // Si el usuario no es cliente, redirigir a la página de login
-            window.location.href = '/Login/login.html';
+          // Si el usuario no es cliente, redirigir a la página de login
+          window.location.href = '/Login/login.html';
         }
-    })
-    .catch(error => {
+      })
+      .catch(error => {
         console.error('Error:', error);
         // Manejar errores, por ejemplo, redirigir a la página de login
         window.location.href = '/Login/login.html';
-    });
-</script>
+      });
+  </script>
 
 
 </body>

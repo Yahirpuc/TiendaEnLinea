@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Página Principal</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.theme.min.css" rel="stylesheet">
+  <link rel="icon" href="/images/ImgsPag/logo.png" type="image/png">
+  
+  <style>
+     /* Animation */
+     @keyframes fadeIn {
+      from {
+          opacity: 0;
+          transform: translateY(20px);
+      }
+      to {
+          opacity: 1;
+          transform: translateY(0);
+      }
+  }
+
+  body {
+      animation: fadeIn 1s ease-in-out;
+  }
+    body {
+      background: linear-gradient(500deg, #d4ffeb 0%, #ced1fc 50%, #FFFFFF 100%);
+    }
+
+    .blur-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px); /* Soporte para Safari */
+      z-index: -1;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-item {
+      position: relative;
+      padding-bottom: 0.5rem;
+    }
+
+    .navbar-item::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background-color: rgba(0, 3, 206, 0.897);
+      transition: width 0.3s ease, left 0.3s ease;
+    }
+
+    .navbar-item:hover::before,
+    .navbar-item:focus::before,
+    .navbar-item.active::before {
+      width: 100%;
+      left: 0;
+    }
+
+    .bg-blur {
+      backdrop-filter: blur(90px);
+      -webkit-backdrop-filter: blur(90px); /* Soporte para Safari */
+      background-color: rgba(253, 253, 253, 0.116);
+    }
+
+    .glide__slide img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+    }
+
+    .glide__arrows {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+    }
+
+    .glide__arrow {
+      background-color: rgba(0, 0, 0, 0);
+      color: white;
+      border: none;
+      padding: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .glide__arrow:hover {
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    .bg-indigo-600 {
+      --tw-bg-opacity: 1;
+      background-color: rgba(0, 31, 206, 0.966);
+    }
+
+    .custom-button:hover {
+      background-color: #000000;
+    }
+
+    .custom-button{
+      background-color: rgba(0, 3, 206, 0.897);
+      transition: background-color 0.7s ease;
+    }
+
+    .custom-button:hover {
+      background-color: #009625;
+      transition: background-color 0.7s ease;
+    }
+  </style>
+</head>
+
+<body class="bg-white text-gray-900">
+
+  <!-- Barra de navegación -->
+  <nav class="bg-blur shadow-md w-full z-10">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <div class="text-lg font-bold flex items-center">
+        <span class="material-icons mr-2"><img src="/images/ImgsPag/logo.png" style="width: 50px; height: 50px;" alt="Logo InnovaByte" title="Logo InnovaByte"></span> <h1 style="font-size: 40px;">InnovaByte</h1>
+      </div>
+      <div class="space-x-4 flex items-center">
+        <a href="#" class="navbar-item text-gray-600 hover:text-gray-900 flex items-center">
+          <span class="material-icons mr-1">home</span> Inicio
+        </a>
+        <a href="/Login/login.html" class="navbar-item text-gray-600 hover:text-gray-900 flex items-center">
+          <span class="material-icons mr-1">local_shipping</span> Mis Pedidos
+        </a>
+        <a href="/Login/login.html" class="navbar-item text-gray-600 hover:text-gray-900 flex items-center">
+          <span class="material-icons mr-1">shopping_cart</span> Mi carrito
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!--Inicio-->
+  <div class="relative overflow-hidden" style="margin-top: 0;">
+    <div class="pb-80 pt-16 sm:pb-40 sm:pt-24 lg:pb-1 lg:pt-40">
+      <div class="relative mx-auto max-w-7xl px-4 sm:static sm:px-6 lg:px-8">
+        <div class="sm:max-w-lg" style="padding: 0px;">
+          <h1 class="text-5xl font-bold tracking-tight text-gray-900 sm:text-6xl">Tu conexión a la tecnología moderna</h1>
+          <p class="mt-4 text-xl text-gray-600">Explora nuestra tienda de accesorios electrónicos y descubre cómo simplificar y enriquecer tu vida digital.</p>
+        </div>
+        <div>
+          <div class="mt-10">
+            <!-- Decorative image grid -->
+            <div aria-hidden="true" class="pointer-events-none lg:absolute lg:inset-y-0 lg:mx-auto lg:w-full lg:max-w-7xl" style="margin-top: 70px;">
+              <div class="absolute transform sm:left-1/2 sm:top-0 sm:translate-x-8 lg:left-1/2 lg:top-1/2 lg:-translate-y-1/2 lg:translate-x-8">
+                <img src="/images/ImgsPag/PersonaComprando.png" alt="Persona Comprando" title="Persona Comprando">
+              </div>
+            </div>
+            <a href="/Login/login.html" class="inline-block rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-center font-medium text-white hover:bg-indigo-700" style="border-radius: 50px;">¡Comenzar!</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sección de productos destacados -->
+  <section class="container mx-auto px-4 py-16" >
+    <h2 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl" style="font-size: 40px;">Novedades y Ofertas Exclusivas</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" id="productos-container" style="margin-top: 30px;">
+      <!-- Los productos se cargarán aquí -->
+    </div>
+  </section>
+
+  <div class="glide mt-24" style="margin-top: 0;">
+    <div class="glide__track" data-glide-el="track">
+      <ul class="glide__slides">
+
+        
+        <li class="glide__slide">
+          
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Paginación -->
+  <nav class="container mx-auto px-4 py-4 flex justify-center">
+    <ul class="inline-flex items-center -space-x-px">
+      <li>
+        <a href="#" class="py-2 px-3 ml-0 leading-tight text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700">Anterior</a>
+      </li>
+      <li>
+        <a href="#" class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">1</a>
+      </li>
+      <li>
+        <a href="#" class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">2</a>
+      </li>
+      <li>
+        <a href="#" class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">3</a>
+      </li>
+      <li>
+        <a href="#" class="py-2 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700">Siguiente</a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Footer -->
+  <footer class="bg-gray-100 py-4">
+    <div class="container mx-auto text-center text-gray-600">
+      <p>&copy; 2024 Universidad Tecnológica Metropolitana. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/glide.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      new Glide('.glide', {
+        type: 'carousel',
+        autoplay: 3000,
+        hoverpause: true,
+        perView: 1
+      }).mount();
+
+      // Cargar productos desde el backend
+      fetch('http://127.0.0.1:8000/productos')
+        .then(response => response.json())
+        .then(data => {
+          const productosContainer = document.getElementById('productos-container');
+          productosContainer.innerHTML = '';
+          data.forEach(producto => {
+            const columna = document.createElement('div');
+            columna.className = 'product-card border rounded-lg p-4 text-center transition transform duration-300';
+            columna.innerHTML = `
+              <img src="${producto.imagen}" alt="Imagen del ${producto.nombre}" title="${producto.nombre}" class="mb-4 mx-auto">
+              <h3 class="text-lg font-semibold">${producto.nombre}</h3>
+              <p class="text-gray-600">$${producto.precio.toFixed(2)}</p>
+              <a href="/Login/login.html" class="custom-button bg-indigo-600 text-white px-4 py-2 rounded-md mt-4 inline-flex items-center justify-center mx-auto w-max hover:bg-blue-600">
+                <span class="material-icons mr-2">add_shopping_cart</span> Agregar al carrito
+              </a>
+            `;
+            productosContainer.appendChild(columna);
+          });
+        })
+        .catch(error => {
+          console.error('Error al cargar los productos:', error);
+        });
+    });
+
+    
+  </script>
+
+</body>
+</html>
