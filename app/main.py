@@ -1,49 +1,35 @@
 import os
-from fastapi import FastAPI, HTTPException, Request, File, UploadFile, Form, status,Depends
+from fastapi import FastAPI, HTTPException, Request, File, UploadFile, Form, status, Depends
 import pyodbc
 import uvicorn
-
 from pydantic import BaseModel, EmailStr
 from typing import List, Optional
 from fastapi.middleware.cors import CORSMiddleware
 import shutil
 from fastapi.staticfiles import StaticFiles
 from starlette.middleware.base import BaseHTTPMiddleware
-from fastapi.responses import RedirectResponse
-from fastapi.responses import JSONResponse
+from fastapi.responses import RedirectResponse, JSONResponse
 import bcrypt
-import pyodbc
 from sqlalchemy import create_engine
-
 
 # Añadir a las importaciones existentes
 from typing import List, Dict
 
 app = FastAPI()
 
-
-
-
-
-
 # Datos de conexión
-# Cadena de conexión a la base de datos SQL Server
+# Obtener la cadena de conexión de la variable de entorno
 connect_string = os.getenv('DATABASE_URL')
 if not connect_string:
     raise ValueError("No DATABASE_URL set for SQLAlchemy engine")
+
 engine = create_engine(connect_string)
-
-
 
 # Configuración de CORS para permitir el origen específico y credenciales
 origins = [
     "http://127.0.0.1:5500",  # Reemplaza con la URL exacta de tu frontend
     "http://127.0.0.1:52727",
-    "http://127.0.0.1:60642 ",
-    
-    
-    
-    
+    "http://127.0.0.1:60642"
 ]
 
 app.add_middleware(
@@ -53,8 +39,6 @@ app.add_middleware(
     allow_methods=["*"],  # Ajusta según los métodos que necesites permitir
     allow_headers=["*"],  # Puedes limitar las cabeceras específicas si es necesario
 )
-
-
 
 def ejecutar_consulta(query, params=None):
     with pyodbc.connect(connect_string) as conn:
@@ -78,8 +62,6 @@ def registrar_auditoria(tipo_operacion, tabla, registro_id, usuario):
     params = (tipo_operacion, tabla, registro_id, usuario)
     ejecutar_consulta(query, params)
     
-    
-
 class ClienteCreate(BaseModel):
     nombre: str
     apellido: str
@@ -91,9 +73,6 @@ class LoginRequest(BaseModel):
     nombre_usuario: str
     contrasena: str
     
-# Modelo Pydantic para la solicitud de cierre de sesión
-
-
 class LoginResponse(BaseModel):
     mensaje: str
     tipo_usuario: Optional[str] = None
@@ -138,20 +117,7 @@ class Venta(BaseModel):
     total_compra: float
     fecha_venta: Optional[str]
 
-
-
-
-
 usuario_actual = {"tipo_usuario": None, "nombre_usuario": None, "cliente_id": None}
-
-
-
-
-
-
-
-
-
 
 class AuthMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
@@ -168,8 +134,6 @@ class AuthMiddleware(BaseHTTPMiddleware):
 
 # Agregar el middleware a la aplicación FastAPI
 app.add_middleware(AuthMiddleware)
-
-
 
 # Endpoint para obtener el rol del usuario
 @app.get("/user-role")
@@ -191,7 +155,6 @@ def admin_page():
     if usuario_actual["tipo_usuario"] != "administrador":
         raise HTTPException(status_code=403, detail="Access forbidden: insufficient permissions")
     return {"message": "Access granted"}
-
 
 @app.post("/cliente/registrar")
 async def registrar_cliente(cliente: ClienteCreate):
@@ -258,7 +221,6 @@ async def iniciar_sesion(login: LoginRequest, request: Request):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
   
-    
 @app.post("/logout", response_model=LoginResponse)
 def cerrar_sesion():
     try:
@@ -282,7 +244,6 @@ def cerrar_sesion():
         return {"mensaje": "Sesión cerrada exitosamente"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-    
 
 @app.get("/sesiones-clientes", response_model=List[dict])
 def obtener_sesiones_clientes():
@@ -299,8 +260,8 @@ def obtener_sesiones_clientes():
                 "ClienteID": sesion[1],
                 "NombreCliente": sesion[2],
                 "NombreUsuario": sesion[3],
-                "FechaCierre": sesion[4],
-                "FechaInicio": sesion[5],
+                "FechaInicio": sesion[4],
+                "FechaCierre": sesion[5],
                 "IP": sesion[6]
             }
             for sesion in sesiones
@@ -308,15 +269,6 @@ def obtener_sesiones_clientes():
         return lista_sesiones
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
-
-
-
-
-
-
-
-
 
 # Configura la carpeta 'imgs' para servir archivos estáticos
 app.mount("/imgs", StaticFiles(directory="imgs"), name="imgs")
@@ -329,10 +281,8 @@ def crear_producto(
     imagen: Optional[UploadFile] = File(None)
 ):
     try:
-        
-        
         filename = None
-        if imagen:
+        if (imagen):
             # Guardar la imagen
             filename = imagen.filename
             filepath = f"imgs/{filename}"
@@ -374,10 +324,9 @@ def obtener_productos():
         for producto in productos
     ]
     return lista_productos
+
 @app.put("/productos/{producto_id}", response_model=Producto)
 def actualizar_producto(producto_id: int, producto: ProductoCreateUpdate):
-    #if usuario_actual["tipo_usuario"] != "administrador":
-     #   raise HTTPException(status_code=403, detail="Acceso denegado")
     try:
         query = """
         UPDATE Productos SET Nombre = ?, Precio = ?, Stock = ?
@@ -416,9 +365,6 @@ def eliminar_producto(producto_id: int):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-
-
-
 @app.post("/comprar-producto")
 def comprar_producto(compra: CompraRequest):
     try:
@@ -445,7 +391,7 @@ def comprar_producto(compra: CompraRequest):
         query_registrar_pedido = """
         EXEC RegistrarPedido @ClienteID = ?, @ProductoID = ?, @Cantidad = ?;
         """
-        cliente_id = usuario_actual.get("cliente_id")  # Suponiendo que 'usuario_actual' tiene el ID del cliente
+        cliente_id = usuario_actual.get("cliente_id")
         if not cliente_id:
             raise HTTPException(status_code=401, detail="Usuario no autenticado")
         params_registrar_pedido = (cliente_id, producto_id, compra.cantidad)
@@ -530,13 +476,10 @@ def cancelar_pedido(pedido_id: int):
         logging.error(f"Error al procesar la cancelación del pedido: {pedido_id}, error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
-
-
-
 @app.get("/mis-pedidos", response_model=List[dict])
 def obtener_mis_pedidos():
     try:
-        cliente_id = usuario_actual["cliente_id"]  # Suponiendo que 'usuario_actual' tiene el ID del cliente
+        cliente_id = usuario_actual["cliente_id"]
 
         # Consulta para obtener los detalles de los pedidos del cliente
         query_pedidos = """
@@ -552,7 +495,7 @@ def obtener_mis_pedidos():
             {
                 "pedido_id": pedido[0],
                 "nombre_producto": pedido[3],
-                "precio_total": float(pedido[4]),  # Asegurarse de que precio_total sea un float
+                "precio_total": float(pedido[4]),
                 "cantidad": pedido[1],
                 "fecha_pedido": pedido[2].strftime('%Y-%m-%d %H:%M:%S')
             }
@@ -561,8 +504,6 @@ def obtener_mis_pedidos():
         return lista_pedidos
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-
-
 
 @app.get("/pedidos", response_model=List[dict])
 def obtener_todos_los_pedidos():
@@ -590,16 +531,12 @@ def obtener_todos_los_pedidos():
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-
-
 import logging
 
 logging.basicConfig(level=logging.INFO)
 
 @app.delete("/productos/{producto_id}")
 def eliminar_producto(producto_id: int):
-    #if usuario_actual["tipo_usuario"] != "administrador":
-    #   raise HTTPException(status_code=403, detail="Acceso denegado")
     try:
         # Actualizar registros en Pedidos para establecer ProductoID a NULL
         query_actualizar_pedidos = "UPDATE Pedidos SET ProductoID = NULL WHERE ProductoID = ?"
@@ -622,12 +559,6 @@ def eliminar_producto(producto_id: int):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-
-    
-
-
-
-
 @app.get("/ganancia-total", response_model=dict)
 def obtener_ganancia_total():
     if usuario_actual["tipo_usuario"] != "administrador":
@@ -646,9 +577,6 @@ def obtener_ganancia_total():
 
 @app.get("/productos-mas-solicitados", response_model=List[dict])
 def obtener_productos_mas_solicitados():
-    #if usuario_actual["tipo_usuario"] != "administrador":
-     #   raise HTTPException(status_code=403, detail="Acceso denegado")
-
     try:
         query = """
         SELECT NombreProducto, SUM(Cantidad) AS TotalVendido
@@ -668,12 +596,8 @@ def obtener_productos_mas_solicitados():
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-
 @app.get("/verificar-stock", response_model=List[dict])
 def verificar_stock_productos():
-    #if usuario_actual["tipo_usuario"] != "administrador":
-     #   raise HTTPException(status_code=403, detail="Acceso denegado")
-    
     try:
         query = """
         SELECT ProductoID, Nombre, Stock
@@ -719,10 +643,6 @@ def obtener_ventas():
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-    
-    
-    
-    
 class DatosPanel(BaseModel):
     productos: int
     stock: int
@@ -735,7 +655,6 @@ class DatosGraficas(BaseModel):
     pastel: List[int]
     categoriasPastel: List[str]
 
-# Mapeo de los números de los meses a nombres en español
 meses_espanol = {
     1: "Enero", 2: "Febrero", 3: "Marzo", 4: "Abril",
     5: "Mayo", 6: "Junio", 7: "Julio", 8: "Agosto",
@@ -787,8 +706,7 @@ def get_datos_graficas():
         return DatosGraficas(barras=data_barras, categoriasBarras=categorias_barras, pastel=data_pastel, categoriasPastel=categorias_pastel)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-    
-    
+
 if __name__ == "__main__":
     uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
 
