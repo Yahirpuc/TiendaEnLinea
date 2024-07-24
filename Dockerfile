@@ -4,7 +4,7 @@ FROM tiangolo/uvicorn-gunicorn-fastapi:python3.8
 WORKDIR /app
 
 # Copia los archivos necesarios al contenedor
-COPY ./app /app
+
 COPY ./requirements.txt /app/requirements.txt
 COPY ./imgs /app/imgs
 COPY ./images /app/images
