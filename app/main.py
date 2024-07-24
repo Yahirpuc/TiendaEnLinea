@@ -41,12 +41,6 @@ origins = [
 def read_root():
     return FileResponse('Index.html')
 
-app.mount("/images", StaticFiles(directory="app/images"), name="images")
-app.mount("/imgs", StaticFiles(directory="app/imgs"), name="imgs")
-app.mount("/Login", StaticFiles(directory="app/Login"), name="Login")
-app.mount("/PaginasDelInicio", StaticFiles(directory="app/PaginasDelInicio"), name="PaginasDelInicio")
-app.mount("/PaginasNav", StaticFiles(directory="app/PaginasNav"), name="PaginasNav")
-app.mount("/PanelAdministracion", StaticFiles(directory="app/PanelAdministracion"), name="PanelAdministracion")
 
 
 app.add_middleware(
