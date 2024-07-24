@@ -12,6 +12,4 @@ RUN ACCEPT_EULA=Y apt-get install -y msodbcsql17
 RUN apt-get install -y unixodbc-dev
 RUN pip install --no-cache-dir -r /app/requirements.txt
 
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
-
-
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
