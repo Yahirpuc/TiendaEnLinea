@@ -26,9 +26,13 @@ app = FastAPI()
 
 
 
+# Datos de conexión
 # Cadena de conexión a la base de datos SQL Server
-DATABASE_URL = "mssql+pyodbc://sa:Yahir@Yahir12345@db:1433/TiendaOnline?driver=ODBC+Driver+17+for+SQL+Server"
-engine = create_engine(DATABASE_URL)
+
+connect_string = os.getenv("mssql+pyodbc://sa:Yahir@Yahir12345@db:1433/TiendaOnline?driver=ODBC+Driver+17+for+SQL+Server")
+engine = create_engine(connect_string)
+
+
 
 
 # Configuración de CORS para permitir el origen específico y credenciales
@@ -53,7 +57,7 @@ app.add_middleware(
 
 
 def ejecutar_consulta(query, params=None):
-    with pyodbc.connect(connection_string) as conn:
+    with pyodbc.connect(connect_string) as conn:
         cursor = conn.cursor()
         if params:
             cursor.execute(query, params)
@@ -307,10 +311,6 @@ def obtener_sesiones_clientes():
 
 
 
-if __name__ == "__main__":
-    uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
-
-
 
 
 
@@ -481,7 +481,7 @@ def cancelar_pedido(pedido_id: int):
         logging.debug(f"Detalles del pedido obtenidos: PedidoID={pedido_id}, ClienteID={cliente_id}, ProductoID={producto_id}, Cantidad={cantidad}")
         
         # Comenzar una transacción
-        with pyodbc.connect(connection_string) as conn:
+        with pyodbc.connect(connect_string) as conn:
             cursor = conn.cursor()
             
             try:
@@ -789,3 +789,9 @@ def get_datos_graficas():
         return DatosGraficas(barras=data_barras, categoriasBarras=categorias_barras, pastel=data_pastel, categoriasPastel=categorias_pastel)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
+    
+if __name__ == "__main__":
+    uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
+
+
