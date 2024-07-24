@@ -40,6 +40,9 @@ app.add_middleware(
     allow_methods=["*"],  # Ajusta según los métodos que necesites permitir
     allow_headers=["*"],  # Puedes limitar las cabeceras específicas si es necesario
 )
+@app.get("/")
+def read_root():
+    return FileResponse('Index.html')
 
 
 
