@@ -28,6 +28,11 @@ database = os.getenv('DB_DATABASE')
 username = os.getenv('DB_USERNAME')
 password = os.getenv('DB_PASSWORD')
 
+logging.info(f"DB_SERVER: {server}")
+logging.info(f"DB_DATABASE: {database}")
+logging.info(f"DB_USERNAME: {username}")
+
+
 if not server or not database or not username or not password:
     raise ValueError("Las variables de entorno DB_SERVER, DB_DATABASE, DB_USERNAME o DB_PASSWORD no están configuradas correctamente")
 
