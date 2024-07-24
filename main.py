@@ -56,10 +56,10 @@ origins = [
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["https://innovabyte-production.up.railway.app"],  # Agrega tu dominio
     allow_credentials=True,
-    allow_methods=["*"],  # Ajusta según los métodos que necesites permitir
-    allow_headers=["*"],  # Puedes limitar las cabeceras específicas si es necesario
+    allow_methods=["*"],  # Permite todos los métodos HTTP
+    allow_headers=["*"],  # Permite todas las cabeceras
 )
 
 class AuthMiddleware(BaseHTTPMiddleware):
