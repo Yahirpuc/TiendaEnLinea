@@ -47,8 +47,8 @@ def read_root():
 
 # Configuración de CORS para permitir el origen específico y credenciales
 origins = [
-    "http://0.0.0.0:8000",  # Reemplaza con la URL exacta de tu frontend
- 
+    "https://innovabyte-production.up.railway.app",
+    # Agrega otros orígenes permitidos si es necesario
 ]
 
 
