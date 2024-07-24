@@ -1,0 +1,20 @@
+version: '3.7'
+
+services:
+  web:
+    build: .
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: "mssql+pyodbc://sa:Yahir@Yahir12345@db:1433/TiendaOnline?driver=ODBC+Driver+17+for+SQL+Server"
+    depends_on:
+      - db
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    ports:
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: "Yahir@Yahir12345"
+      ACCEPT_EULA: "Y"
