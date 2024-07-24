@@ -229,7 +229,7 @@
       }).mount();
 
       // Cargar productos desde el backend
-      fetch('http://127.0.0.1:8000/productos')
+      fetch('http://0.0.0.0:8000/productos')
         .then(response => response.json())
         .then(data => {
           const productosContainer = document.getElementById('productos-container');
