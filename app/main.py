@@ -47,8 +47,12 @@ app.mount("/images", StaticFiles(directory="images"), name="images")
 # Montar el directorio 'imgs' para servir archivos estáticos
 app.mount("/imgs", StaticFiles(directory="imgs"), name="imgs")
 
+# Montar el directorio 'Login' para servir archivos estáticos
+app.mount("/Login", StaticFiles(directory="Login"), name="Login")
+
 # Montar el directorio raíz para servir archivos HTML estáticos
 app.mount("/", StaticFiles(directory="."), name="static")
+
 
 def ejecutar_consulta(query, params=None):
     with pyodbc.connect(connect_string) as conn:
