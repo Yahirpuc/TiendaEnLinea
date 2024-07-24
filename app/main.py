@@ -28,7 +28,7 @@ engine = create_engine(connect_string)
 
 # Configuración de CORS para permitir el origen específico y credenciales
 origins = [
-    "http://0.0.0.1:8000",  # Reemplaza con la URL exacta de tu frontend
+    "http://0.0.0.0:8000",  # Reemplaza con la URL exacta de tu frontend
  
 ]
 
