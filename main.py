@@ -9,6 +9,7 @@ import shutil
 from fastapi.staticfiles import StaticFiles
 from starlette.middleware.base import BaseHTTPMiddleware
 from fastapi.responses import FileResponse, RedirectResponse, JSONResponse 
+import logging
 
 import bcrypt
 from sqlalchemy import create_engine
