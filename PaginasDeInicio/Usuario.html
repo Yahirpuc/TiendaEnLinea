@@ -242,7 +242,7 @@
       }).mount();
 
       // Cargar productos desde el backend
-      fetch('http://127.0.0.1:8000/productos')
+      fetch('http://0.0.0.0:8000/productos')
         .then(response => response.json())
         .then(data => {
           const productosContainer = document.getElementById('productos-container');
@@ -293,7 +293,7 @@
     /* Función de cerrar sesión */
     document.getElementById('logout-button').addEventListener('click', function (event) {
       event.preventDefault();
-      fetch('http://127.0.0.1:8000/logout', {
+      fetch('http://0.0.0.0:8000/logout', {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -344,7 +344,7 @@
   </script>
   <script>
     // Verificar el rol del usuario al cargar la página
-    fetch('http://127.0.0.1:8000/user-role', {
+    fetch('http://0.0.0.0:8000/user-role', {
       method: 'GET',
       credentials: 'include'
     })
