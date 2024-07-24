@@ -20,7 +20,7 @@ from dotenv import load_dotenv
 
 
 
-
+load_dotenv()
 app = FastAPI()
 
 server = os.getenv('DB_SERVER')
