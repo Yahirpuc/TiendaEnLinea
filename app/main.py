@@ -44,7 +44,7 @@ origins = [
 # Montar directorios estáticos
 app.mount("/images", StaticFiles(directory="images"), name="images")
 app.mount("/imgs", StaticFiles(directory="imgs"), name="imgs")
-app.mount("/Login", StaticFiles(directory="Login"), name="Login")
+
 app.mount("/PaginasDelInicio", StaticFiles(directory="PaginasDelInicio"), name="PaginasDelInicio")
 app.mount("/PaginasNav", StaticFiles(directory="PaginasNav"), name="PaginasNav")
 app.mount("/PanelAdministracion", StaticFiles(directory="PanelAdministracion"), name="PanelAdministracion")
