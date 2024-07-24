@@ -45,15 +45,14 @@ connect_string = (
     f"Encrypt=yes;"
     f"TrustServerCertificate=no;"
     f"Connection Timeout=30;"
+    f"MultiSubnetFailover=True;"
 )
-
 
 try:
     with pyodbc.connect(connect_string, timeout=30) as conn:
         logging.info("Conexión exitosa a la base de datos")
 except pyodbc.Error as e:
     logging.error(f"Error al conectar a la base de datos: {e}")
-
 
 
 
