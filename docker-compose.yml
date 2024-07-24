@@ -7,7 +7,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      DB_SERVER: "tcp:inovabyte2.database.windows.net,1433"
-      DB_DATABASE: "inovabyte"
-      DB_USERNAME: "geovanydominguez"
-      DB_PASSWORD: "Flacodeoro55"
+      DB_SERVER: "${DB_SERVER}"
+      DB_DATABASE: "${DB_DATABASE}"
+      DB_USERNAME: "${DB_USERNAME}"
+      DB_PASSWORD: "${DB_PASSWORD}"
