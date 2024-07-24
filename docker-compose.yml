@@ -7,5 +7,4 @@ services:
     ports:
       - "8000:8000"
     environment:
-      DATABASE_URL="mssql+pyodbc://geovanydominguez:Flacodeoro55@tcp:inovabyte2.database.windows.net:1433/inovabyte?driver=ODBC+Driver+17+for+SQL+Server"
-
+      DATABASE_URL: "mssql+pyodbc://geovanydominguez:Flacodeoro55@inovabyte2.database.windows.net:1433/inovabyte?driver=ODBC+Driver+17+for+SQL+Server"
