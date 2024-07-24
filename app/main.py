@@ -31,6 +31,7 @@ app = FastAPI()
 connect_string = os.getenv('DATABASE_URL')
 if not connect_string:
     raise ValueError("No DATABASE_URL set for SQLAlchemy engine")
+engine = create_engine(connect_string)
 
 
 
