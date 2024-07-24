@@ -18,7 +18,7 @@ from typing import List, Dict
 
 
 
-app.mount("/Login", StaticFiles(directory="app/Login"), name="Login")
+
 
 app = FastAPI()
 
