@@ -15,6 +15,7 @@ from sqlalchemy import create_engine
 
 # Añadir a las importaciones existentes
 from typing import List, Dict
+from dotenv import load_dotenv
 
 
 
