@@ -34,7 +34,7 @@ engine = create_engine(connect_string)
 
 @app.get("/")
 def read_root():
-    return FileResponse('app/Index.html')
+    return FileResponse('/Index.html')
 
 # Configuración de CORS para permitir el origen específico y credenciales
 origins = [
