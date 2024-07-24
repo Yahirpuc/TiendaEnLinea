@@ -5,7 +5,7 @@ WORKDIR /app
 COPY ./app /app
 COPY ./requirements.txt /app/requirements.txt
 COPY ./Login /app/Login
-COPY ./PaginasDelInicio /app/PaginasDelInicio
+COPY ./PaginasDeInicio /app/PaginasDeInicio
 COPY ./PaginasNav /app/PaginasNav
 COPY ./PanelAdministracion /app/PanelAdministracion
 COPY ./images /app/images
