@@ -2,7 +2,7 @@ FROM tiangolo/uvicorn-gunicorn-fastapi:python3.8
 
 COPY ./app /app
 COPY ./requirements.txt /app/requirements.txt
-COPY ./imgs # Asegúrate de copiar el directorio imgs
+COPY ./imgs /app/imgs  # Asegúrate de copiar el directorio imgs
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y curl apt-transport-https gnupg
@@ -14,3 +14,4 @@ RUN apt-get install -y unixodbc-dev
 RUN pip install --no-cache-dir -r /app/requirements.txt
 
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+
