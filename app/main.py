@@ -13,6 +13,7 @@ from fastapi.responses import RedirectResponse
 from fastapi.responses import JSONResponse
 import bcrypt
 import pyodbc
+from sqlalchemy import create_engine
 
 
 # Añadir a las importaciones existentes
@@ -25,35 +26,9 @@ app = FastAPI()
 
 
 
-# Datos de conexión
-server = 'TiendaOnline.mssql.somee.com'
-database = 'TiendaOnline'
-username = 'Prueba123_SQLLogin_1'
-password = 'zzf2196be6'
-
-# Cadena de conexión
-connection_string = (
-    f'DRIVER={{SQL Server}};SERVER=TiendaOnline.mssql.somee.com;DATABASE=TiendaOnline;'
-    f'UID=Prueba123_SQLLogin_1;PWD=zzf2196be6;TrustServerCertificate=YES;'
-    f'Workstation ID=TiendaOnline.mssql.somee.com;Packet Size=4096'
-)
-
-try:
-    # Intentar conectar a la base de datos
-    connection = pyodbc.connect(connection_string)
-    print("Conexión exitosa")
-except Exception as e:
-    # Imprimir cualquier error de conexión
-    print(f"Error: {e}")
-
-
-try:
-    # Intentar conectar a la base de datos
-    connection = pyodbc.connect(connection_string)
-    print("Conexión exitosa")
-except Exception as e:
-    # Imprimir cualquier error de conexión
-    print(f"Error: {e}")
+# Cadena de conexión a la base de datos SQL Server
+DATABASE_URL = "mssql+pyodbc://sa:Yahir@Yahir12345@db:1433/TiendaOnline?driver=ODBC+Driver+17+for+SQL+Server"
+engine = create_engine(DATABASE_URL)
 
 
 # Configuración de CORS para permitir el origen específico y credenciales
