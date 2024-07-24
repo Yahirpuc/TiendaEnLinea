@@ -1,18 +1,11 @@
 FROM tiangolo/uvicorn-gunicorn-fastapi:python3.8
 
 # Establece el directorio de trabajo en /app
-WORKDIR /app
+WORKDIR /
 
-# Copia los archivos necesarios al contenedor
 
-COPY ./requirements.txt /app/requirements.txt
-COPY ./imgs /app/imgs
-COPY ./images /app/images
-COPY ./Login /app/Login
-COPY ./PaginasDeInicio /app/PaginasDeInicio
-COPY ./PaginasNav /app/PaginasNav
-COPY ./PanelAdministracion /app/PanelAdministracion
-COPY ./Index.html /app/Index.html
+
+
 
 # Instala las dependencias necesarias
 RUN apt-get update && apt-get install -y curl apt-transport-https gnupg
