@@ -43,6 +43,7 @@ app.add_middleware(
 
 
 
+
 def ejecutar_consulta(query, params=None):
     with pyodbc.connect(connect_string) as conn:
         cursor = conn.cursor()
@@ -137,6 +138,10 @@ class AuthMiddleware(BaseHTTPMiddleware):
 
 # Agregar el middleware a la aplicación FastAPI
 app.add_middleware(AuthMiddleware)
+
+@app.get("/")
+def read_root():
+    return FileResponse('Index.html')
 
 # Endpoint para obtener el rol del usuario
 @app.get("/user-role")
