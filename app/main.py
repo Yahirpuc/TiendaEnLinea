@@ -28,9 +28,8 @@ engine = create_engine(connect_string)
 
 # Configuración de CORS para permitir el origen específico y credenciales
 origins = [
-    "http://127.0.0.1:5500",  # Reemplaza con la URL exacta de tu frontend
-    "http://127.0.0.1:52727",
-    "http://127.0.0.1:60642"
+    "http://0.0.0.1:8000",  # Reemplaza con la URL exacta de tu frontend
+ 
 ]
 
 app.add_middleware(
@@ -46,8 +45,7 @@ def read_root():
 
 
 
-# Montar el directorio raíz para servir archivos HTML estáticos
-app.mount("/", StaticFiles(directory="."), name="static")
+
 
 
 def ejecutar_consulta(query, params=None):
