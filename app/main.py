@@ -28,11 +28,11 @@ app = FastAPI()
 
 # Datos de conexión
 # Cadena de conexión a la base de datos SQL Server
+DATABASE_URL = os.getenv('DATABASE_URL')
+if not DATABASE_URL:
+    raise ValueError("No DATABASE_URL set for SQLAlchemy engine")
 
-connect_string = os.getenv("mssql+pyodbc://sa:Yahir@Yahir12345@db:1433/TiendaOnline?driver=ODBC+Driver+17+for+SQL+Server")
-engine = create_engine(connect_string)
-
-
+engine = create_engine(DATABASE_URL)
 
 
 # Configuración de CORS para permitir el origen específico y credenciales
