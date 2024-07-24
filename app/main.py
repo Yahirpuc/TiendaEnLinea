@@ -41,6 +41,15 @@ app.add_middleware(
     allow_headers=["*"],  # Puedes limitar las cabeceras específicas si es necesario
 )
 
+# Montar el directorio 'images' para servir archivos estáticos
+app.mount("/images", StaticFiles(directory="images"), name="images")
+
+# Montar el directorio 'imgs' para servir archivos estáticos
+app.mount("/imgs", StaticFiles(directory="imgs"), name="imgs")
+
+# Montar el directorio raíz para servir archivos HTML estáticos
+app.mount("/", StaticFiles(directory="."), name="static")
+
 def ejecutar_consulta(query, params=None):
     with pyodbc.connect(connect_string) as conn:
         cursor = conn.cursor()
