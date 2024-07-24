@@ -33,12 +33,16 @@ logging.info(f"DB_SERVER: {server}")
 logging.info(f"DB_DATABASE: {database}")
 logging.info(f"DB_USERNAME: {username}")
 
-
 if not server or not database or not username or not password:
     raise ValueError("Las variables de entorno DB_SERVER, DB_DATABASE, DB_USERNAME o DB_PASSWORD no están configuradas correctamente")
 
-# Cadena de conexión utilizando autenticación SQL Server
 connect_string = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password};Connection Timeout=30;'
+
+try:
+    with pyodbc.connect(connect_string, timeout=30) as conn:
+        logging.info("Conexión exitosa a la base de datos")
+except pyodbc.Error as e:
+    logging.error(f"Error al conectar a la base de datos: {e}")
 
 
 
