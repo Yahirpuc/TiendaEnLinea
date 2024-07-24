@@ -20,10 +20,11 @@ app = FastAPI()
 # Datos de conexión
 # Obtener la cadena de conexión de la variable de entorno
 connect_string = os.getenv('DATABASE_URL')
+print(f"DATABASE_URL: {connect_string}")  # Añadir esta línea para depuración
 if not connect_string:
-    raise ValueError("No DATABASE_URL set for SQLAlchemy engine")
+    raise ValueError("No DATABASE_URL set for SQLAlchemy engine xd")
 
-engine = create_engine(connect_string)
+engine = create_engine(connect_string)= create_engine(connect_string)
 
 # Configuración de CORS para permitir el origen específico y credenciales
 origins = [
