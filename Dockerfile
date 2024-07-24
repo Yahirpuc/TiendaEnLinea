@@ -8,8 +8,7 @@ COPY ./Login /app/Login
 COPY ./PaginasDeInicio /app/PaginasDeInicio
 COPY ./PaginasNav /app/PaginasNav
 COPY ./PanelAdministracion /app/PanelAdministracion
-COPY ./images /app/images
-COPY ./imgs /app/imgs
+
 COPY ./Index.html /app/Index.html
 
 RUN apt-get update && apt-get install -y curl apt-transport-https gnupg
