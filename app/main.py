@@ -37,9 +37,6 @@ origins = [
  
 ]
 
-@app.get("/")
-def read_root():
-    return FileResponse('Index.html')
 
 
 
