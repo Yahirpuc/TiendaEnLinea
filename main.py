@@ -22,14 +22,17 @@ from typing import List, Dict
 
 app = FastAPI()
 
-# Datos de conexión
-# Obtener la cadena de conexión de la variable de entorno
-connect_string = os.getenv('DATABASE_URL')
-print(f"DATABASE_URL: {connect_string}")  # Añadir esta línea para depuración
-if not connect_string:
-    raise ValueError("No DATABASE_URL set for SQLAlchemy engine xd")
+server = os.getenv('DB_SERVER')
+database = os.getenv('DB_DATABASE')
+username = os.getenv('DB_USERNAME')
+password = os.getenv('DB_PASSWORD')
 
-engine = create_engine(connect_string)
+if not server or not database or not username or not password:
+    raise ValueError("Las variables de entorno DB_SERVER, DB_DATABASE, DB_USERNAME o DB_PASSWORD no están configuradas correctamente")
+
+# Cadena de conexión utilizando autenticación SQL Server
+connection_string = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}'
+
 
 
 # Montar directorios estáticos
