@@ -32,7 +32,8 @@ if not server or not database or not username or not password:
     raise ValueError("Las variables de entorno DB_SERVER, DB_DATABASE, DB_USERNAME o DB_PASSWORD no están configuradas correctamente")
 
 # Cadena de conexión utilizando autenticación SQL Server
-connect_string = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}'
+connect_string = f'DRIVER={{ODBC Driver 17 for SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password};Connection Timeout=30;'
+
 
 
 
