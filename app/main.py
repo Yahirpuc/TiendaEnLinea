@@ -17,13 +17,8 @@ from sqlalchemy import create_engine
 from typing import List, Dict
 
 
-# Crear las carpetas si no existen
-os.makedirs("images", exist_ok=True)
-os.makedirs("imgs", exist_ok=True)
-os.makedirs("Login", exist_ok=True)
-os.makedirs("PaginasDelInicio", exist_ok=True)
-os.makedirs("PaginasNav", exist_ok=True)
-os.makedirs("PanelAdministracion", exist_ok=True)
+
+app.mount("/Login", StaticFiles(directory="app/Login"), name="Login")
 
 app = FastAPI()
 
