@@ -2,7 +2,7 @@
 FROM python:3.9-slim
 
 # Establece el directorio de trabajo
-WORKDIR /app
+WORKDIR /
 
 # Copia los archivos de requisitos e instalación
 COPY requirements.txt .
@@ -13,7 +13,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Instala curl y otros paquetes necesarios
 RUN apt-get update && \
     apt-get install -y curl apt-transport-https gnupg && \
-    curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
     curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
     echo "deb [arch=amd64,armhf,arm64] https://packages.microsoft.com/ubuntu/20.04/prod focal main" | tee /etc/apt/sources.list.d/msprod.list && \
     apt-get update && \
@@ -27,3 +26,4 @@ EXPOSE 8000
 
 # Define el comando por defecto a ejecutar cuando se inicie el contenedor
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+
