@@ -16,6 +16,15 @@ from sqlalchemy import create_engine
 # Añadir a las importaciones existentes
 from typing import List, Dict
 
+
+# Crear las carpetas si no existen
+os.makedirs("images", exist_ok=True)
+os.makedirs("imgs", exist_ok=True)
+os.makedirs("Login", exist_ok=True)
+os.makedirs("PaginasDelInicio", exist_ok=True)
+os.makedirs("PaginasNav", exist_ok=True)
+os.makedirs("PanelAdministracion", exist_ok=True)
+
 app = FastAPI()
 
 # Datos de conexión
