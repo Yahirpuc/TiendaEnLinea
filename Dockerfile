@@ -3,6 +3,9 @@ FROM tiangolo/uvicorn-gunicorn-fastapi:python3.8
 # Establece el directorio de trabajo en la raíz
 WORKDIR /
 
+# Copia el archivo requirements.txt en el contenedor
+COPY requirements.txt /requirements.txt
+
 # Instala las dependencias necesarias
 RUN apt-get update && apt-get install -y curl apt-transport-https gnupg
 RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
@@ -10,7 +13,12 @@ RUN curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list > /etc/apt
 RUN apt-get update
 RUN ACCEPT_EULA=Y apt-get install -y msodbcsql17
 RUN apt-get install -y unixodbc-dev
-RUN pip install --no-cache-dir -r /requirements.txt
+
+# Comando para depuración
+RUN cat /requirements.txt
+
+# Instala las dependencias de Python
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Expone el puerto que la aplicación usará
 EXPOSE 8000
