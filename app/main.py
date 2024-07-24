@@ -39,18 +39,6 @@ app.add_middleware(
     allow_methods=["*"],  # Ajusta según los métodos que necesites permitir
     allow_headers=["*"],  # Puedes limitar las cabeceras específicas si es necesario
 )
-# Montar directorios
-app.mount("/images", StaticFiles(directory="images"), name="images")
-app.mount("/imgs", StaticFiles(directory="imgs"), name="imgs")
-app.mount("/Login", StaticFiles(directory="Login"), name="Login")
-app.mount("/PaginasDelInicio", StaticFiles(directory="PaginasDelInicio"), name="PaginasDelInicio")
-app.mount("/PaginasNav", StaticFiles(directory="PaginasNav"), name="PaginasNav")
-app.mount("/PanelAdministracion", StaticFiles(directory="PanelAdministracion"), name="PanelAdministracion")
-
-# Servir Index.html en la raíz
-@app.get("/")
-def read_root():
-    return FileResponse('Index.html')
 
 
 
