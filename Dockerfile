@@ -2,7 +2,7 @@ FROM tiangolo/uvicorn-gunicorn-fastapi:python3.8
 
 COPY ./app /app
 COPY ./requirements.txt /app/requirements.txt
-COPY ./imgs /app/imgs  # Asegúrate de copiar el directorio imgs
+COPY ./imgs /app/imgs
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y curl apt-transport-https gnupg
