@@ -9,7 +9,7 @@ COPY ./requirements.txt /app/requirements.txt
 COPY ./imgs /app/imgs
 COPY ./images /app/images
 COPY ./Login /app/Login
-COPY ./PaginasDelInicio /app/PaginasDelInicio
+COPY ./PaginasDeInicio /app/PaginasDeInicio
 COPY ./PaginasNav /app/PaginasNav
 COPY ./PanelAdministracion /app/PanelAdministracion
 COPY ./Index.html /app/Index.html
