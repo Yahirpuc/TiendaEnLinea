@@ -7,12 +7,19 @@ WORKDIR /
 COPY ./requirements.txt /requirements.txt
 
 # Instala las dependencias necesarias
-RUN apt-get update && apt-get install -y curl apt-transport-https gnupg
-RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add -
-RUN curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list > /etc/apt/sources.list.d/mssql-release.list
-RUN apt-get update
-RUN ACCEPT_EULA=Y apt-get install -y msodbcsql17
-RUN apt-get install -y unixodbc-dev
+# Actualiza el sistema e instala las dependencias necesarias
+RUN apt-get update && \
+    apt-get install -y \
+    curl \
+    apt-transport-https \
+    gnupg \
+    unixodbc-dev \
+    && curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
+    && curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list > /etc/apt/sources.list.d/mssql-release.list \
+    && apt-get update \
+    && ACCEPT_EULA=Y apt-get install -y msodbcsql17 \
+    && rm -rf /var/lib/apt/lists/*
+    
 RUN pip install --no-cache-dir -r /requirements.txt
 
 # Copia el resto de los archivos del proyecto a la raíz del contenedor
