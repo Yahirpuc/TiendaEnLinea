@@ -7,10 +7,10 @@ services:
     ports:
       - "8000:8000"
     environment:
-      DB_SERVER: "${DB_SERVER}"
-      DB_DATABASE: "${DB_DATABASE}"
-      DB_USERNAME: "${DB_USERNAME}"
-      DB_PASSWORD: "${DB_PASSWORD}"
+      DB_SERVER=tcp:inovabyte2.database.windows.net,1433
+      DB_DATABASE=TiendaOnline32
+      DB_USERNAME=geovanydominguez
+      DB_PASSWORD=Flacodeoro55
     networks:
       - mynetwork
 
