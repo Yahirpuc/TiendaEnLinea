@@ -72,9 +72,45 @@ def ejecutar_consulta(query, params=None):
             conn.commit()
             return True
 
+
+
+# Montar directorios necesarios
+
 @app.get("/")
 def read_root():
     return FileResponse('Index.html')
+
+@app.get("/Login/{filename}")
+def get_login_file(filename: str):
+    file_path = os.path.join("Login", filename)
+    return FileResponse(file_path)
+
+@app.get("/PaginasDeInicio/{filename}")
+def get_paginas_de_inicio_file(filename: str):
+    file_path = os.path.join("PaginasDeInicio", filename)
+    return FileResponse(file_path)
+
+@app.get("/PaginasNav/{filename}")
+def get_paginas_nav_file(filename: str):
+    file_path = os.path.join("PaginasNav", filename)
+    return FileResponse(file_path)
+
+@app.get("/PanelAdministracion/{filename}")
+def get_panel_administracion_file(filename: str):
+    file_path = os.path.join("PanelAdministracion", filename)
+    return FileResponse(file_path)
+
+@app.get("/images/{filename}")
+def get_images_file(filename: str):
+    file_path = os.path.join("images", filename)
+    return FileResponse(file_path)
+
+@app.get("/imgs/{filename}")
+def get_imgs_file(filename: str):
+    file_path = os.path.join("imgs", filename)
+    return FileResponse(file_path)
+
+
 
 
 
