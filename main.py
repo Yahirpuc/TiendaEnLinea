@@ -33,22 +33,16 @@ def get_connect_string():
     username = os.getenv('DB_USERNAME', 'geovanydominguez')
     password = os.getenv('DB_PASSWORD', 'Flacodeoro55')
 
-# Crear la cadena de conexión
-connect_string = (
-    f"DRIVER={{ODBC Driver 18 for SQL Server}};"
-    f"SERVER={tcp:inovabyte2.database.windows.net,1433};"
-    f"DATABASE={TiendaOnline32};"
-    f"UID={geovanydominguez};"
-    f"PWD={Flacodeoro55};"
-    f"Encrypt=yes;"
-    f"TrustServerCertificate=no;"
-    f"Connection Timeout=60;"
-)
-
-
-
-
-
+    return (
+        f"DRIVER={{ODBC Driver 18 for SQL Server}};"
+        f"SERVER={server};"
+        f"DATABASE={database};"
+        f"UID={username};"
+        f"PWD={password};"
+        f"Encrypt=yes;"
+        f"TrustServerCertificate=no;"
+        f"Connection Timeout=60;"
+    )
 
 # Montar directorios estáticos
 app.mount("/Login", StaticFiles(directory="Login"), name="Login")
@@ -58,14 +52,9 @@ app.mount("/PanelAdministracion", StaticFiles(directory="PanelAdministracion"), 
 app.mount("/images", StaticFiles(directory="images"), name="images")
 app.mount("/imgs", StaticFiles(directory="imgs"), name="imgs")
 
-
 @app.get("/")
 def read_root():
     return FileResponse('Index.html')
-
-
-
-
 
 # Configuración de CORS
 app.add_middleware(
@@ -75,7 +64,6 @@ app.add_middleware(
     allow_methods=["*"],  # Permite todos los métodos HTTP
     allow_headers=["*"],  # Permite todas las cabeceras
 )
-
 class AuthMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
         # Definir rutas que no requieren autenticación
