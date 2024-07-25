@@ -27,15 +27,16 @@ app = FastAPI()
 
 
 # Configuración de conexión a la base de datos
-def get_connect_string():
-    server = os.getenv('DB_SERVER', 'tcp:inovabyte2.database.windows.net,1433')
+def connect_string():
+    server = os.getenv('DB_SERVER', 'inovabyte2.database.windows.net')
+    port = os.getenv('DB_PORT', '1433')
     database = os.getenv('DB_DATABASE', 'TiendaOnline32')
     username = os.getenv('DB_USERNAME', 'geovanydominguez')
     password = os.getenv('DB_PASSWORD', 'Flacodeoro55')
 
     return (
         f"DRIVER={{ODBC Driver 18 for SQL Server}};"
-        f"SERVER={server};"
+        f"SERVER={server},{port};"
         f"DATABASE={database};"
         f"UID={username};"
         f"PWD={password};"
@@ -43,6 +44,7 @@ def get_connect_string():
         f"TrustServerCertificate=no;"
         f"Connection Timeout=60;"
     )
+
 
 # Montar directorios estáticos
 app.mount("/Login", StaticFiles(directory="Login"), name="Login")
