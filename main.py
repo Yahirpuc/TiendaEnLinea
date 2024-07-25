@@ -37,7 +37,7 @@ if not server or not database or not username or not password:
     raise ValueError("Las variables de entorno DB_SERVER, DB_DATABASE, DB_USERNAME o DB_PASSWORD no están configuradas correctamente")
 
 connect_string = (
-    f"DRIVER={{ODBC Driver 17 for SQL Server}};"
+    f"DRIVER={{ODBC Driver 18 for SQL Server}};"
     f"SERVER={server};"
     f"DATABASE={database};"
     f"UID={username};"
