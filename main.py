@@ -24,18 +24,14 @@ from dotenv import load_dotenv
 load_dotenv()
 app = FastAPI()
 
-server = os.getenv('DB_SERVER')
-database = os.getenv('DB_DATABASE')
-username = os.getenv('DB_USERNAME')
-password = os.getenv('DB_PASSWORD')
 
-logging.info(f"DB_SERVER: {server}")
-logging.info(f"DB_DATABASE: {database}")
-logging.info(f"DB_USERNAME: {username}")
 
-if not server or not database or not username or not password:
-    raise ValueError("Las variables de entorno DB_SERVER, DB_DATABASE, DB_USERNAME o DB_PASSWORD no están configuradas correctamente")
+server = os.getenv('DB_SERVER', 'tcp:TiendaOnline32.database.windows.net,1433')
+database = os.getenv('DB_DATABASE', 'TiendaOnline32')
+username = os.getenv('DB_USERNAME', 'geovanydominguez')
+password = os.getenv('DB_PASSWORD', 'Flacodeoro55')
 
+# Crear la cadena de conexión
 connect_string = (
     f"DRIVER={{ODBC Driver 18 for SQL Server}};"
     f"SERVER={server};"
@@ -47,12 +43,6 @@ connect_string = (
     f"Connection Timeout=60;"
 )
 
-
-try:
-    with pyodbc.connect(connect_string, timeout=30) as conn:
-        logging.info("Conexión exitosa a la base de datos")
-except pyodbc.Error as e:
-    logging.error(f"Error al conectar a la base de datos: {e}")
 
 
 
