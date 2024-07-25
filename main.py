@@ -44,7 +44,7 @@ connect_string = (
     f"PWD={password};"
     f"Encrypt=yes;"
     f"TrustServerCertificate=no;"
-    f"Connection Timeout=30;"
+    f"Connection Timeout=60;"
 )
 
 
