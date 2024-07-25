@@ -27,7 +27,7 @@ app = FastAPI()
 
 
 # Configuración de conexión a la base de datos
-def connect_string():
+def get_connect_string():
     server = os.getenv('DB_SERVER', 'tcp:inovabyte2.database.windows.net,1433')
     database = os.getenv('DB_DATABASE', 'TiendaOnline32')
     username = os.getenv('DB_USERNAME', 'geovanydominguez')
@@ -80,6 +80,7 @@ class AuthMiddleware(BaseHTTPMiddleware):
 
 
 def ejecutar_consulta(query, params=None):
+    connect_string = get_connect_string()  # Obtener la cadena de conexión
     with pyodbc.connect(connect_string) as conn:
         cursor = conn.cursor()
         if params:
@@ -92,6 +93,7 @@ def ejecutar_consulta(query, params=None):
         else:
             conn.commit()
             return True
+
 
 def registrar_auditoria(tipo_operacion, tabla, registro_id, usuario):
     query = """
