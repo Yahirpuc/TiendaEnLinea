@@ -36,18 +36,6 @@ def get_connect_string():
         
     )
 
-# Montar directorios estáticos
-app.mount("/Login", StaticFiles(directory="Login"), name="Login")
-app.mount("/PaginasDeInicio", StaticFiles(directory="PaginasDeInicio"), name="PaginasDeInicio")
-app.mount("/PaginasNav", StaticFiles(directory="PaginasNav"), name="PaginasNav")
-app.mount("/PanelAdministracion", StaticFiles(directory="PanelAdministracion"), name="PanelAdministracion")
-app.mount("/images", StaticFiles(directory="images"), name="images")
-app.mount("/imgs", StaticFiles(directory="imgs"), name="imgs")
-
-
-@app.get("/")
-def read_root():
-    return FileResponse('Index.html')
 
 # Configuración de CORS
 app.add_middleware(
