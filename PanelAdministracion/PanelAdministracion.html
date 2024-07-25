@@ -853,7 +853,7 @@
     // CARGAR PRODUCTOS
     async function cargarProductos() {
       try {
-        const response = await fetch('http://0.0.0.0:8000/productos');
+        const response = await fetch('https://innovabyte-production.up.railway.app/productos');
         productos = await response.json();
         const tableBody = document.getElementById('table-body');
         const noDataMessage = document.getElementById('no-data-productos');
@@ -908,7 +908,7 @@
       const stock = document.getElementById('editar-stock').value;
 
       try {
-        const response = await fetch(`http://0.0.0.0:8000/productos/${id}`, {
+        const response = await fetch(`https://innovabyte-production.up.railway.app/productos/${id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json'
@@ -954,7 +954,7 @@
 
     async function eliminarProducto(producto_id) {
       try {
-        const response = await fetch(`http://0.0.0.0:8000/productos/${producto_id}`, {
+        const response = await fetch(`https://innovabyte-production.up.railway.app/productos/${producto_id}`, {
           method: 'DELETE'
         });
 
@@ -990,7 +990,7 @@
       formData.append('imagen', imagen);
 
       try {
-        const response = await fetch('http://0.0.0.0:8000/productos', {
+        const response = await fetch('https://innovabyte-production.up.railway.app/productos', {
           method: 'POST',
           body: formData
         });
@@ -1025,7 +1025,7 @@
     // CARGAR CLIENTES
     async function cargarClientes() {
       try {
-        const response = await fetch('http://0.0.0.0:8000/sesiones-clientes');
+        const response = await fetch('https://innovabyte-production.up.railway.app/sesiones-clientes');
         const sesiones = await response.json();
         const tableBody = document.getElementById('table-body-clientes');
         const noDataMessage = document.getElementById('no-data-clientes');
@@ -1060,7 +1060,7 @@
     // CARGAR PRODUCTOS MÁS SOLICITADOS
     async function cargarProductosMasSolicitados() {
       try {
-        const response = await fetch('http://0.0.0.0:8000/productos-mas-solicitados');
+        const response = await fetch('https://innovabyte-production.up.railway.app/productos-mas-solicitados');
         const productos = await response.json();
         const productosContainer = document.getElementById('productos-container');
         productosContainer.innerHTML = '';
@@ -1081,7 +1081,7 @@
     // CARGAR STOCK
     async function cargarStock() {
       try {
-        const response = await fetch('http://127.0.0.1:8000/verificar-stock');
+        const response = await fetch('https://innovabyte-production.up.railway.app/verificar-stock');
         const productos = await response.json();
         const productosContainer = document.getElementById('stock-container');
         productosContainer.innerHTML = '';
@@ -1108,7 +1108,7 @@
     // CARGAR VENTAS
     async function cargarVentas() {
       try {
-          const response = await fetch('http://0.0.0.0:8000/ventas');
+          const response = await fetch('https://innovabyte-production.up.railway.app/ventas');
           const ventas = await response.json();
           const tableBody = document.getElementById('ventas-container');
 
@@ -1181,7 +1181,7 @@
 
     async function cargarDatosPanel() {
       try {
-        const response = await fetch('http://0.0.0.0:8000/datos-panel');
+        const response = await fetch('https://innovabyte-production.up.railway.app/datos-panel');
         const datos = await response.json();
 
         document.getElementById('productos-count').innerText = datos.productos;
@@ -1194,7 +1194,7 @@
     }
     async function cargarGraficas() {
       try {
-        const response = await fetch('http://0.0.0.0:8000/datos-graficas');
+        const response = await fetch('https://innovabyte-production.up.railway.app/datos-graficas');
         const datos = await response.json();
 
         const commonOptions = {
