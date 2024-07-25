@@ -70,9 +70,10 @@ origins = [
 
 
 
+# Configuración de CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://innovabyte-production.up.railway.app"],  # Agrega tu dominio
+    allow_origins=["https://innovabyte-production.up.railway.app"],  # Dominio permitido
     allow_credentials=True,
     allow_methods=["*"],  # Permite todos los métodos HTTP
     allow_headers=["*"],  # Permite todas las cabeceras
