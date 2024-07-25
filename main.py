@@ -26,7 +26,7 @@ app = FastAPI()
 
 
 
-server = os.getenv('DB_SERVER', 'tcp:TiendaOnline32.database.windows.net,1433')
+server = os.getenv('DB_SERVER', 'inovabyte2.database.windows.net')
 database = os.getenv('DB_DATABASE', 'TiendaOnline32')
 username = os.getenv('DB_USERNAME', 'geovanydominguez')
 password = os.getenv('DB_PASSWORD', 'Flacodeoro55')
