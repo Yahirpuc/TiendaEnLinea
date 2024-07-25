@@ -192,7 +192,7 @@
 
     function cargarPedidos() {
       console.log('Cargando pedidos...');
-      fetch('http://127.0.0.1:8000/mis-pedidos')
+      fetch('https://innovabyte-production.up.railway.app/mis-pedidos')
         .then(response => {
           console.log('Respuesta recibida:', response);
           return response.json();
@@ -249,7 +249,7 @@
 
     function cancelarPedido(pedido_id) {
       console.log('Cancelando pedido:', pedido_id);
-      fetch(`http://127.0.0.1:8000/pedido/${pedido_id}`, {
+      fetch(`https://innovabyte-production.up.railway.app/pedido/${pedido_id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'
@@ -290,7 +290,7 @@
     /* Función de cerrar sesión */
     document.getElementById('logout-button').addEventListener('click', function (event) {
       event.preventDefault();
-      fetch('http://127.0.0.1:8000/logout', {
+      fetch('https://innovabyte-production.up.railway.app/logout', {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -324,7 +324,7 @@
 
   </script>
   <script>
-    fetch('http://127.0.0.1:8000/user-page', {
+    fetch('https://innovabyte-production.up.railway.app/user-page', {
       method: 'GET',
       credentials: 'include'
     })
