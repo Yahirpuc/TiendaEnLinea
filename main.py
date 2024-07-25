@@ -29,7 +29,7 @@ app = FastAPI()
 # Configuración de conexión a la base de datos
 def get_connect_string():
     server = os.getenv('DB_SERVER', 'tcp:inovabyte2.database.windows.net,1433')
-    database = os.getenv('DB_DATABASE', 'NombreDeTuBaseDeDatos')
+    database = os.getenv('DB_DATABASE', 'TiendaOnline32')
     username = os.getenv('DB_USERNAME', 'geovanydominguez')
     password = os.getenv('DB_PASSWORD', 'Flacodeoro55')
 
