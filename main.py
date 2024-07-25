@@ -36,10 +36,10 @@ def get_connect_string():
 # Crear la cadena de conexión
 connect_string = (
     f"DRIVER={{ODBC Driver 18 for SQL Server}};"
-    f"SERVER={server};"
-    f"DATABASE={database};"
-    f"UID={username};"
-    f"PWD={password};"
+    f"SERVER={tcp:inovabyte2.database.windows.net,1433};"
+    f"DATABASE={TiendaOnline32};"
+    f"UID={geovanydominguez};"
+    f"PWD={Flacodeoro55};"
     f"Encrypt=yes;"
     f"TrustServerCertificate=no;"
     f"Connection Timeout=60;"
