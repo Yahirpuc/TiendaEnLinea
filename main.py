@@ -46,6 +46,8 @@ connect_string = (
 
 
 
+
+
 # Montar directorios estáticos
 app.mount("/Login", StaticFiles(directory="Login"), name="Login")
 app.mount("/PaginasDeInicio", StaticFiles(directory="PaginasDeInicio"), name="PaginasDeInicio")
