@@ -63,11 +63,6 @@ app.mount("/imgs", StaticFiles(directory="imgs"), name="imgs")
 def read_root():
     return FileResponse('Index.html')
 
-# Configuración de CORS para permitir el origen específico y credenciales
-origins = [
-    "https://innovabyte-production.up.railway.app",
-    # Agrega otros orígenes permitidos si es necesario
-]
 
 
 
