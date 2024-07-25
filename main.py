@@ -8,26 +8,17 @@ from fastapi.middleware.cors import CORSMiddleware
 import shutil
 from fastapi.staticfiles import StaticFiles
 from starlette.middleware.base import BaseHTTPMiddleware
-from fastapi.responses import FileResponse, RedirectResponse, JSONResponse 
+from fastapi.responses import FileResponse, RedirectResponse, JSONResponse
 import logging
-
 import bcrypt
 from sqlalchemy import create_engine
-
-# Añadir a las importaciones existentes
-from typing import List, Dict
 from dotenv import load_dotenv
-
-
-
 
 load_dotenv()
 app = FastAPI()
 
-
-
 # Configuración de conexión a la base de datos
-def connect_string():
+def get_connect_string():
     server = os.getenv('DB_SERVER', 'inovabyte2.database.windows.net')
     port = os.getenv('DB_PORT', '1433')
     database = os.getenv('DB_DATABASE', 'TiendaOnline32')
@@ -44,7 +35,6 @@ def connect_string():
         f"TrustServerCertificate=no;"
         f"Connection Timeout=60;"
     )
-
 
 # Montar directorios estáticos
 app.mount("/Login", StaticFiles(directory="Login"), name="Login")
@@ -66,6 +56,7 @@ app.add_middleware(
     allow_methods=["*"],  # Permite todos los métodos HTTP
     allow_headers=["*"],  # Permite todas las cabeceras
 )
+
 class AuthMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
         # Definir rutas que no requieren autenticación
@@ -76,10 +67,6 @@ class AuthMiddleware(BaseHTTPMiddleware):
         # Llamar al siguiente middleware o al controlador de endpoint
         response = await call_next(request)
         return response
-
-
-
-
 
 def ejecutar_consulta(query, params=None):
     connect_string = get_connect_string()  # Obtener la cadena de conexión
@@ -95,6 +82,7 @@ def ejecutar_consulta(query, params=None):
         else:
             conn.commit()
             return True
+
 
 
 def registrar_auditoria(tipo_operacion, tabla, registro_id, usuario):
