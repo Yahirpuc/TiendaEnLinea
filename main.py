@@ -43,7 +43,7 @@ app.mount("/PaginasNav", StaticFiles(directory="PaginasNav"), name="PaginasNav")
 app.mount("/PanelAdministracion", StaticFiles(directory="PanelAdministracion"), name="PanelAdministracion")
 app.mount("/images", StaticFiles(directory="images"), name="images")
 app.mount("/imgs", StaticFiles(directory="imgs"), name="imgs")
-app.mount("/", StaticFiles(directory="."), name="root")
+
 
 @app.get("/")
 def read_root():
