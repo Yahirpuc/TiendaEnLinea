@@ -72,6 +72,10 @@ def ejecutar_consulta(query, params=None):
             conn.commit()
             return True
 
+@app.get("/")
+def read_root():
+    return FileResponse('Index.html')
+
 
 
 def registrar_auditoria(tipo_operacion, tabla, registro_id, usuario):
