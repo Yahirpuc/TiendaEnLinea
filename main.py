@@ -13,6 +13,7 @@ import logging
 import bcrypt
 from sqlalchemy import create_engine
 from dotenv import load_dotenv
+from fastapi.responses import HTMLResponse
 
 load_dotenv()
 app = FastAPI()
