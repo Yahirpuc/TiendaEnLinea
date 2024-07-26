@@ -452,7 +452,7 @@ def cancelar_pedido(pedido_id: int):
         logging.debug(f"Detalles del pedido obtenidos: PedidoID={pedido_id}, ClienteID={cliente_id}, ProductoID={producto_id}, Cantidad={cantidad}")
         
         # Comenzar una transacción
-        with pyodbc.connect(get_connect_string) as conn:
+        with pyodbc.connect(get_connect_string()) as conn:
             cursor = conn.cursor()
             
             try:
