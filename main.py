@@ -18,6 +18,11 @@ from fastapi.responses import HTMLResponse
 load_dotenv()
 app = FastAPI()
 
+# Función para leer el archivo HTML
+def read_html(file_path: str) -> str:
+    with open(file_path, 'r') as file:
+        return file.read()
+
 # Configuración de conexión a la base de datos
 def get_connect_string():
     server = os.getenv('DB_SERVER', 'inovabyte2.database.windows.net')
