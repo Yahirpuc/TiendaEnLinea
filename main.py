@@ -72,7 +72,7 @@ def ejecutar_consulta(query, params=None):
             conn.commit()
             return True
 
-
+current_dir = os.path.dirname(os.path.abspath(__file__))
 
 # Montar directorios necesarios
 
