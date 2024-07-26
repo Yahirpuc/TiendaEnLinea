@@ -72,10 +72,10 @@ def ejecutar_consulta(query, params=None):
             conn.commit()
             return True
 
-current_dir = os.path.dirname(os.path.abspath(__file__))
+
 
 # todo estatcio
-app.mount("/", StaticFiles(directory="static", html=True), name="static")
+
 
 # Montar directorios necesarios
 app.mount("/Login", StaticFiles(directory="Login"), name="Login")
@@ -89,9 +89,6 @@ app.mount("/imgs", StaticFiles(directory="imgs"), name="imgs")
 def read_root():
     return FileResponse(os.path.join(current_dir, 'Index.html'))
 
-@app.get("/CierreLogin")
-def read_cierre_login():
-    return FileResponse(os.path.join(current_dir, 'Login/CierreLogin.html'))
 
 
 
