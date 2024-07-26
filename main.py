@@ -86,8 +86,7 @@ app.mount("/imgs", StaticFiles(directory="imgs"), name="imgs")
 
 @app.get("/")
 def read_root():
-    return FileResponse('Index.html')
-
+    return FileResponse(os.path.join(current_dir, 'Index.html'))
 
 
 
