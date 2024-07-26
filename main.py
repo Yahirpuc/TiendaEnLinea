@@ -78,6 +78,7 @@ def ejecutar_consulta(query, params=None):
 
 
 # Montar directorios necesarios
+
 app.mount("/Login", StaticFiles(directory="Login"), name="Login")
 app.mount("/PaginasDeInicio", StaticFiles(directory="PaginasDeInicio"), name="PaginasDeInicio")
 app.mount("/PaginasNav", StaticFiles(directory="PaginasNav"), name="PaginasNav")
@@ -85,10 +86,10 @@ app.mount("/PanelAdministracion", StaticFiles(directory="PanelAdministracion"), 
 app.mount("/images", StaticFiles(directory="images"), name="images")
 app.mount("/imgs", StaticFiles(directory="imgs"), name="imgs")
 
-@app.get("./")
-def read_root():
-    return FileResponse(os.path.join(current_dir, 'Index.html'))
-
+@app.get("/", response_class=HTMLResponse)
+async def serve_html():
+    file_path = os.path.join(os.path.dirname(__file__), "Index.html")
+    return read_html(file_path)
 
 
 
