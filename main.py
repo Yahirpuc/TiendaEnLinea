@@ -75,6 +75,8 @@ def ejecutar_consulta(query, params=None):
 
 
 # todo estatcio
+# Define current_dir
+current_dir = os.path.dirname(os.path.abspath(__file__))
 
 
 # Montar directorios necesarios
