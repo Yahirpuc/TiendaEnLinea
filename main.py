@@ -85,7 +85,7 @@ app.mount("/PanelAdministracion", StaticFiles(directory="PanelAdministracion"), 
 app.mount("/images", StaticFiles(directory="images"), name="images")
 app.mount("/imgs", StaticFiles(directory="imgs"), name="imgs")
 
-@app.get("/Login")
+@app.get("./")
 def read_root():
     return FileResponse(os.path.join(current_dir, 'Index.html'))
 
