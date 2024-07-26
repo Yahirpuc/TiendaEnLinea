@@ -88,6 +88,10 @@ app.mount("/imgs", StaticFiles(directory="imgs"), name="imgs")
 def read_root():
     return FileResponse(os.path.join(current_dir, 'Index.html'))
 
+@app.get("/CierreLogin")
+def read_cierre_login():
+    return FileResponse(os.path.join(current_dir, 'Login/CierreLogin.html'))
+
 
 
 def registrar_auditoria(tipo_operacion, tabla, registro_id, usuario):
