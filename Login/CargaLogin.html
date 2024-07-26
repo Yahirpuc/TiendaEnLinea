@@ -58,14 +58,14 @@
                     } else if (role === 'administrador') {
                         window.location.href = '/PanelAdministracion/PanelAdministracion.html';
                     } else {
-                        window.location.href = '/Login/Login.html'; // Redirigir a página de login en caso de rol desconocido
+                        window.location.href = '/Login/login.html'; // Redirigir a página de login en caso de rol desconocido
                     }
                   }, 1000);
             
                 } catch (error) {
                     console.error('Error:', error);
                     alert('Error al iniciar sesión: ' + error.message);
-                    window.location.href = '/Login/Login.html'; // Redirigir a página de login en caso de error
+                    window.location.href = '/Login/login.html'; // Redirigir a página de login en caso de error
                 }
             });
     </script>
