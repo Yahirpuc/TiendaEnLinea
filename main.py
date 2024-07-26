@@ -74,7 +74,8 @@ def ejecutar_consulta(query, params=None):
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
-# Montar directorios necesarios
+# todo estatcio
+app.mount("/", StaticFiles(directory="static", html=True), name="static")
 
 # Montar directorios necesarios
 app.mount("/Login", StaticFiles(directory="Login"), name="Login")
@@ -249,8 +250,8 @@ async def iniciar_sesion(login: LoginRequest, request: Request):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
   
-@app.post("/logout", response_model=LoginResponse)
-def cerrar_sesion():
+@app.post("/logout")
+async def cerrar_sesion():
     try:
         # Obtener el ClienteID automáticamente basado en la sesión activa
         cliente_id = usuario_actual.get("cliente_id")
@@ -269,7 +270,8 @@ def cerrar_sesion():
         usuario_actual["nombre_usuario"] = None
         usuario_actual["cliente_id"] = None
 
-        return {"mensaje": "Sesión cerrada exitosamente"}
+        # Redirigir a la página de inicio
+        return RedirectResponse(url="/Index.html", status_code=302)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
