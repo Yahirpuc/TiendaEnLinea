@@ -254,8 +254,8 @@ async def iniciar_sesion(login: LoginRequest, request: Request):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
   
-@app.post("/logout")
-async def cerrar_sesion():
+@app.post("/logout", response_model=LoginResponse)
+def cerrar_sesion():
     try:
         # Obtener el ClienteID automáticamente basado en la sesión activa
         cliente_id = usuario_actual.get("cliente_id")
@@ -274,8 +274,7 @@ async def cerrar_sesion():
         usuario_actual["nombre_usuario"] = None
         usuario_actual["cliente_id"] = None
 
-        # Redirigir a la página de inicio
-      
+        return {"mensaje": "Sesión cerrada exitosamente"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
