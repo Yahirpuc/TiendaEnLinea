@@ -268,7 +268,7 @@ async def cerrar_sesion():
         usuario_actual["cliente_id"] = None
 
         # Redirigir a la página de inicio
-        return RedirectResponse(url="/Index.html", status_code=302)
+        return RedirectResponse(url="/Login/CierreLogin.html", status_code=302)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
