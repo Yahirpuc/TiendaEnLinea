@@ -13,6 +13,7 @@ import logging
 import bcrypt
 from sqlalchemy import create_engine
 from dotenv import load_dotenv
+from fastapi.responses import FileResponse
 
 load_dotenv()
 app = FastAPI()
@@ -87,9 +88,13 @@ app.mount("/PanelAdministracion", StaticFiles(directory="PanelAdministracion"), 
 app.mount("/images", StaticFiles(directory="images"), name="images")
 app.mount("/imgs", StaticFiles(directory="imgs"), name="imgs")
 
+
 @app.get("/")
 def read_root():
     return FileResponse(os.path.join(current_dir, 'Index.html'))
+@app.get("/")
+def get_specific_file():
+    return FileResponse("Index.html")
 
 
 
