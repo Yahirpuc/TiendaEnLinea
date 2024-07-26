@@ -93,9 +93,6 @@ app.mount("/imgs", StaticFiles(directory="imgs"), name="imgs")
 def read_root():
     return FileResponse(os.path.join(current_dir, 'Index.html'))
     
-@app.get("/Index.html")
-def get_specific_file():
-    return FileResponse("/Index.html")
 
 
 
